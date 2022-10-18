@@ -9,12 +9,14 @@ import { Axios } from '../../Axios'
 
 
 
-export default function Qvotobox({ elem, id, setStatus }) {
+export default function Qvotobox({ elem, id ,setStatus }) {
 	const [isActive, setIsActive] = useState(false)
 	const [showModal, setShowModal] = useState(false)
 	const [arr, setArr] = useState([])
-
+ 
 	const date = new Date(elem.createdAt)
+   
+	console.log(elem)
 
 	const val = date.getDate()
 	const month = date.getMonth()
@@ -42,8 +44,8 @@ export default function Qvotobox({ elem, id, setStatus }) {
 				quote_status: 'rejected',
 				id: id
 			}).then((res) => {
-				setIsActive(false)
-				setStatus('history')
+					setIsActive(false)
+			setStatus('history')
 
 			})
 		} catch (error) {
@@ -55,29 +57,29 @@ export default function Qvotobox({ elem, id, setStatus }) {
 	const handleInputChangeDom = (event) => {
 		const id = event.target.getAttribute('seller')
 		if (event.target.checked) {
-			sendarr.push({
-				seller: id,
-				price: null
-			})
+		  sendarr.push({
+			seller:id,
+			price:null
+		  })
 		} else {
-			const index = sendarr.indexOf(id)
-			sendarr.splice(index, 1)
+		const index = sendarr.indexOf(id)
+		sendarr.splice(index,1)
 		}
+	  
+		
+	  };
 
-
-	};
-
-	const sendRfq = async () => {
-		await Axios.put('/admin/click/sendrfq', {
-			id: id,
-			sellers: sendarr
-		}).then((res) => {
+      const sendRfq = async()=>{
+        await Axios.put('/admin/click/sendrfq' , {
+			id:id,
+			sellers : sendarr
+		}).then((res)=>{
 			setShowModal(false)
 			setStatus('active')
-		}).catch((err) => {
+		}).catch((err)=>{
 			console.log(err)
 		})
-	}
+	  }
 
 	useEffect(() => {
 		const getdata = async () => {
@@ -87,7 +89,7 @@ export default function Qvotobox({ elem, id, setStatus }) {
 				console.log(err);
 			})
 		}
-
+ 
 		getdata()
 
 	}, [])
@@ -116,7 +118,7 @@ export default function Qvotobox({ elem, id, setStatus }) {
 											</div>
 											<div className="w-1/5 mr-2 flex flex-col">
 												<p className="text-[#637F94] font-semibold">Cas No.</p>
-												<p className="text-base">{elem.product['CASNo']}</p>
+												<p className="text-base">{elem.product['CAS No']}</p>
 											</div>
 										</div>
 
@@ -142,17 +144,17 @@ export default function Qvotobox({ elem, id, setStatus }) {
 															<Fragment>
 																<Checkbox seller={elem._id} onClick={handleInputChangeDom} id="ripple-on" ripple={true} />
 															</Fragment>
-															<p className="ml-4 mt-2 text-[#1672DE]">{elem._id}</p>
+															<p className="ml-4 mt-2 text-[#1672DE]">#453412434</p>
 															<p className="ml-4 mt-2 font-semibold">{elem.name}</p>
 															<p className='ml-4 mt-2 font-semibold'>Product Available</p>
-
+															
 															<p>edit</p>
 														</div>
 													)
 												})
 
 												}
-
+												
 											</div>
 										</div>
 
@@ -176,9 +178,9 @@ export default function Qvotobox({ elem, id, setStatus }) {
 													<p className="ml-4 mt-2 font-semibold">Abc Privare Ltd</p>
 													<p>edit</p>
 												</div>
-
-
-
+												
+												
+												
 											</div>
 										</div>
 
@@ -186,7 +188,7 @@ export default function Qvotobox({ elem, id, setStatus }) {
 											<button
 												className="bg-red-500 text-white background-transparent font-bold uppercase px-6 py-3 text-sm rounded shadow outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
 												type="button"
-												onClick={() => { setShowModal(false) }}
+												onClick={() =>{ setShowModal(false)}}
 											>
 												Close
 											</button>
@@ -211,7 +213,7 @@ export default function Qvotobox({ elem, id, setStatus }) {
 
 			<div className="right bg-white shadow-xl px-3  rounded-md py-4">
 				<div className="flex flex-col gap-2">
-					<p className="text-[#1672DE] text-[14px] font-[400px]">#RFQ{val + '' + month + '' + year}</p>
+					<p className="text-[#1672DE] text-[14px] font-[400px]">#RFQ{val + '' + month + '' +year }</p>
 					<h2 className=" text-[24px] font-[600]">{elem.product ? elem.product.name : 'null'}</h2>
 				</div>
 				<div className="flex gap-4 mt-3">
@@ -234,7 +236,7 @@ export default function Qvotobox({ elem, id, setStatus }) {
 					</div>
 					<div className="flex flex-col gap-2">
 						<p className="text-[14px] font-[600] text-[#637F94]">CAS No</p>
-						<p className="text-[14px] font-[400]">{elem.product['CASNo'] ? elem.product['CASNo'] : 'null'}
+						<p className="text-[14px] font-[400]">{elem.product['CASNo'] ?elem.product['CASNo']:'null' }
 						</p>
 					</div>
 					<div className="flex flex-col gap-2">
@@ -246,7 +248,7 @@ export default function Qvotobox({ elem, id, setStatus }) {
 				<div className="flex gap-3 mt-6 mb-2">
 					<img src={rac} className={' h-full'} alt="" />
 					<div className="flex flex-col gap-1">
-						<p className="text-[14px] font-[600] text-[#1672DE]">Buyer Id : {elem._id} </p>
+						<p className="text-[14px] font-[600] text-[#1672DE]">Buyer Id : {elem && elem.buyer ? elem.buyer._id : "null"} </p>
 						<p className="text-[16px] font-[400] text-black">Abc ltd. </p>
 					</div>
 				</div>
@@ -256,9 +258,9 @@ export default function Qvotobox({ elem, id, setStatus }) {
 						Buyer's Remarks
 					</h2>
 					<p className="text-[#637F94] text-[14px] font-[400] mt-3">
-						{elem.remark ? elem.remark : 'No Remark'}
-						{elem.remark.length > 40 &&
-							<span className="text-[blue]"> <a href="/"> read more </a></span>}
+						{elem.remark ? elem.remark : 'No Remark'}	
+						{ elem.remark.length > 40 &&
+						 <span className="text-[blue]"> <a href="/"> read more </a></span>}
 					</p>
 				</div>
 				<div className="mt-9">

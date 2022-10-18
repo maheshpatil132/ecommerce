@@ -10,8 +10,7 @@ const Errorhandler = require("../utils/errorhandler");
 
 // create
 exports.createorder = catchaysnc(async (req, res, next) => {
-    const { product, quantity, buyer_pincode, remark } = req.body
-    console.log(req.user)
+    const { product, quantity , buyer_pincode , remark} = req.body
     const data = {
         buyer: req.user.id,
         product,
@@ -20,25 +19,23 @@ exports.createorder = catchaysnc(async (req, res, next) => {
         remark
     }
     const order = new db({ ...data })
+   
 
-
-    const buyer = await BuyerModel.findByIdAndUpdate(req.user.id, {
-        $push: {
-            bids: order._id
-        }
-    })
-
+    const buyer = await BuyerModel.findByIdAndUpdate(req.user.id , {$push:{
+        bids : order._id
+    }})
+   
     console.log(product)
     const prod = await ProductModel.findById(product)
 
-    if (!prod) {
-        return next(new Errorhandler('product not exist', 404))
+    if(!prod){
+        return next(new Errorhandler('product not exist',404))
     }
 
-    if (!buyer) {
+    if(!buyer){
         return next(new Errorhandler("buyer not found", 404))
     }
-
+     
     await order.save()
     await buyer.save()
 
@@ -92,7 +89,7 @@ exports.sellerupdates = catchaysnc(async (req, res, next) => {
     const { price } = req.body
 
     const data = {
-        seller: req.user._id,
+        seller: req.user.id,
         price
     }
     const order = await db.findById(req.body.id)
@@ -101,12 +98,12 @@ exports.sellerupdates = catchaysnc(async (req, res, next) => {
         return next(new Errorhandler('order not found', 404))
     }
 
-    const isBided = order.bids.find(rev => rev.seller.toString() === req.user._id.toString())
+    const isBided = order.bids.find(rev => rev.seller.toString() === req.user.id.toString())
 
     if (isBided) {
 
         order.bids.forEach(rev => {
-            if (rev.seller.toString() === req.user._id.toString()) {
+            if (rev.seller.toString() === req.user.id.toString()) {
                 rev.price = price
             }
         })

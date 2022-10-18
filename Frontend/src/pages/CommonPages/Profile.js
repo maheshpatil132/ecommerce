@@ -14,8 +14,9 @@ import UpContactPopup from '../../components/UpContactPopup'
 import EditName from '../../components/EditName';
 import Company_description from './Company_description'
 import { Axios } from '../../components/Axios';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
-import AllProducts from './AllProducts';
+import SellerProducts from '../Seller/SellerProducts';
 import Enquires from '../Seller/Enquires';
 import Sellerorderhistory from '../Seller/Sellerorderhistory';
 import Payment from '../../components/Buyer/Payment/Payment';
@@ -28,13 +29,19 @@ const Profile = () => {
 	const [value, setValue] = useState(0)
 	const [val, setVal] = useState()
 	const [user, setUser] = useState()
-	const [admin, setAdmin] = useState(true)
+	const [admin, setAdmin] = useState()
+
+	const data = useSelector(state => state.user)
+	console.log(data.user.role)
+
+	
 	const [showModal, setShowModal] = React.useState(false);
 	const { id } = useParams()
 	const { role } = useParams()
-
-
+	
+	
 	useEffect(() => {
+		data.user.role === 'admin' ? setAdmin(true) : setAdmin(false)
 		const getdata = async () => {
 			await Axios.get(`/${role}/${id}`).then((res) => {
 				if (role === 'buyer') {
@@ -50,6 +57,16 @@ const Profile = () => {
 			})
 		}
 		getdata()
+
+		const adminCheck = async () => {
+			await Axios.get('/isAdmin').then((res) => {
+				setAdmin(res.success)
+				console.log(res.success)
+			}).catch((error) => {
+				console.log(error);
+			})
+		}
+		adminCheck()
 	}, [])
 
 	const handletabs = (e, val) => {
@@ -204,7 +221,7 @@ const Profile = () => {
 						{
 							role === 'seller' &&
 							value === 3 &&
-							<AllProducts />
+							<SellerProducts id={id} user1={user} />
 						}
 						{
 							role === 'seller' &&

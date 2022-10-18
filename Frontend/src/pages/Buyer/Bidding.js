@@ -65,7 +65,7 @@ const Bidding = () => {
     }, [status])
 
     return (
-        <div className=' flex-1 h-screen'>
+        <div className=' flex-1 h-screen overflow-y-scroll'>
             <Header />
             <div className="flex">
 

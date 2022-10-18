@@ -1,5 +1,5 @@
 import ArrowForward from '@mui/icons-material/ArrowForward';
-import ClearIcon from '@mui/icons-material/Clear';
+import { Axios } from '../../components/Axios';
 import React from 'react'
 import OnBoardHeader from '../../components/OnBoardHeader'
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
@@ -13,11 +13,10 @@ import pics from "../../images/pic.jpeg"
 import ProductReqpopUp from '../../components/ProductReqpopUp';
 import ProdRequestAdded from '../../components/ProdRequestAdded';
 
-function AllProducts() {
+function AllProducts({ id, user1 }) {
 
     const [products, setProducts] = useState([])
     const [showModal, setShowModal] = React.useState(false);
-    const [showModal1, setShowModal1] = React.useState(false);
 
     const { user, isAuthenticated } = useSelector(state => state.user)
     const { product } = useSelector(state => state.product)
@@ -33,15 +32,17 @@ function AllProducts() {
         setProducts(product)
     }, [])
 
+    console.log(id)
+    console.log(user1.products)
 
     return (
         <>
-            <div className="flex justify-center px-10 align-middle h-screen overflow-y-scroll bg-white flex-1">
+            <div className="flex align-middle p-4 h-screen overflow-y-scroll bg-white flex-1">
                 <OnBoardHeader />
-                <div className="flex flex-col ">
-                    <div className="flex w-10/12 justify-between mt-20">
-                        <p className='font-semibold text-2xl ml-44'>Product Catalouge</p>
-                        {user && user.role === 'seller' &&
+                <div className="flex flex-col w-full">
+                    <div className="flex justify-between mt-4">
+                        <p className='font-semibold text-2xl mb-2'>Product Catalouge</p>
+                        {user && (user.role === 'seller' || user.role === 'admin') &&
                             <button onClick={() => setShowModal(true)} className="border border-[#004AA2] text-[#004AA2] w-fit gap-4 px-2 py-1 rounded-md mr-5"><ControlPointIcon /><span className='mt-1 ml-3'>Add Product</span></button>
                         }
 
@@ -83,7 +84,7 @@ function AllProducts() {
                     <div className=" text-center">
                         <div className=" grid grid-cols-4  gap-3 mt-6">
                             {
-                                products && products.map((elem, index) => {
+                                products && products.filter((p) => user1.products.includes(p._id)).map((elem, index) => {
                                     return (
                                         <div className=" flex border flex-col rounded-md shadow-lg h-fit">
                                             <div className="">

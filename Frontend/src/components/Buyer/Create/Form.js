@@ -45,7 +45,7 @@ function Form() {
       mobile: formData.mobile,
     }).then((data)=>{
     console.log(data)
-    navigate("/maqure")
+    navigate("/dashboard")
     
   }).catch((e)=>{
     console.log(e)

@@ -115,6 +115,7 @@ exports.deletebuyer = catchaysnc(async(req,res,next)=>{
 
 
 exports.getallBuyerBids = catchaysnc(async(req,res,next)=>{
+  console.log(req.user.id)
   const buyerbids = await db.findById(req.user.id, { bids:1 } ).populate('bids').populate([
     { 
       path: 'bids', 
@@ -122,7 +123,6 @@ exports.getallBuyerBids = catchaysnc(async(req,res,next)=>{
       
     }
   ])
-
   if(!buyerbids){
     return next(new Errorhandler('something went wrong please try to login',404))
   }

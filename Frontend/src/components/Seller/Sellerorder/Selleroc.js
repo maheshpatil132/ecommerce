@@ -99,7 +99,7 @@ export default function History() {
 												</div>
 											</div>
 											{
-												data.map((e, key) => {
+												data.filter((bid) => bid.order_status === 'preparing').map((e, key) => {
 													return e.winner.map((data, key) => {
 														return sellerid === data.seller ? (
 															<div key={e._id} className="flex my-1 border rounded-md hover:border-blue-500">
@@ -163,7 +163,7 @@ export default function History() {
 												</div>
 											</div>
 											{
-												data.map((e, key) => {
+												data.filter((bid) => bid.order_status !== 'preparing').map((e, key) => {
 													return e.winner.map((data, key) => {
 														return sellerid === data.seller ? (
 															<div key={e._id} className="flex my-1 border rounded-md hover:border-blue-500">
@@ -205,12 +205,8 @@ export default function History() {
 										:
 										< ExploreEnquiry />
 							}
-
 						</div>
 					</div>
-
-					{/* table */}
-
 				</div>
 			</div>
 		</div>

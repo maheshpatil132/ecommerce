@@ -7,91 +7,66 @@ const jwt = require('jsonwebtoken')
 const SellerModel = mongoose.Schema({
   name: {
     type: String,
-
+    required: true
   },
   employees: {
     type: Number,
-
+    
   },
-  companyName: {
-    type: String
+  companyName:{
+    type:String
   },
-  address: {
-    type: String
+  address:{
+    type:String
   },
   Category: {
     type: String,
-
+    required: true
   },
-  Area: {
-    type: String,
+  Area:{
+    type:String,
+    required:true
+},
+cin:{
+  type:String,
+  required:true
+},
+gst:{
+  type:String,
+  required:true
+},
 
-  },
-  cin: {
-    type: String,
-
-  },
-  gst: {
-    type: String,
-
-  },
-
-  mobile: {
-    type: Number,
-
-  },
-  capacity: {
-    type: Number,
-
-  },
-  linkedin: {
-    type: String,
-
-  },
-  about: {
-    type: String,
-
-  },
+mobile:{
+  type:Number,
+  required:true
+},
+capacity:{
+  type:Number,
+  required:true
+},
+linkedin:{
+  type:String,
+  
+},
+about:{
+  type:String,
+  required:true
+},
 
   email: {
     type: String,
-
+    required: true,
     validator: [validator.isEmail, "Please Enter the valid Email"]
   },
   password: {
     type: String,
-
+    required: true
   },
   role: {
     type: String,
     default: "seller"
   },
-  profileAddress: [
-    {
-      type: String,
-      name: String,
-      mobile: Number,
-      address: String
-    }
-  ],
-  profileBank: [
-    {
-      name: String,
-      ifsc: String,
-      accountNo: Number,
-      bankName: String,
-      branchName: String,
-      primary: Boolean
-    }
-  ],
-  profileContact: [
-    {
-      name: String,
-      role: String,
-      mobile: Number,
-      email: String
-    }
-  ],
+  
   products: [
     {
       type: mongoose.SchemaTypes.ObjectId,

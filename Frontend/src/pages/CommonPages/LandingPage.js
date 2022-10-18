@@ -370,8 +370,15 @@ export default function LandingPage() {
                                             <img src={pic} className="h-36 w-64 rounded-t-md" />
                                         </div>
                                         <div className="p-3">
-                                            <p className='text-start text-[#637F94] text-sm'>INCI Name</p>
-                                            <p className="text-start">{elem.name}</p>
+                                            <p className='text-start text-[#637F94] text-sm'>Name</p>
+                                            <p className="text-start">{elem.name.length > 25 ?
+                                                <>
+                                                    {elem.name.slice(0, 25)}
+                                                    <span className="span">....</span>
+                                                </>
+                                                :
+                                                elem.name.slice(0, 25)
+                                            }</p>
                                         </div>
 
                                         <div className="mt-2 border border-transparent border-t-gray-200 flex justify-between p-3">

@@ -6,63 +6,54 @@ const jwt = require('jsonwebtoken')
 const BuyerModel = mongoose.Schema({
   name: {
     type: String,
-    
+    required: true
   },
   employees: {
     type: Number,
-    
   },
   address:{
     type:String
   },
   Category: {
     type: String,
-    
   },
   Area: {
     type: String,
-    
   },
   cin: {
     type: String,
-    
   },
   gst: {
     type: String,
-    
   },
   ownername: {
     type: String,
-    
   },
   capacity: {
     type: String,
-    
   },
   linkedin: {
     type: String,
   },
   about: {
     type: String,
-    
   },
   companyName: {
     type: String,
   },
   email: {
     type: String,
-    
+    required: true,
     validator: [validator.isEmail, "Please Enter the valid Email"]
   },
   password: {
     type: String,
-    
+    required: true,
     select: false,
   },
   mobile: {
     type: Number,
     length: 10,
-    
   },
   role: {
     type: String,

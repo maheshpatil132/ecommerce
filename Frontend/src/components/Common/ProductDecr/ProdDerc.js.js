@@ -63,11 +63,11 @@ function ProdDecr() {
 								<p className="font-xs">Synonyms </p>
 								<h3 className="font-xl">{product && product.Synonyms ? product.Synonyms : "-"}</h3>
 							</div>
-							<div className="py-3 mx-6 px-4 rounded prod_bag w-1/10">
+							<div className="py-3 mx-6 px-4 h-fit rounded prod_bag w-1/10">
 								<p className="font-xs">Color</p>
 								<h3 className="font-xl text-center">{product && product.color ? product.color : '-'}</h3>
 							</div>
-							<div className="py-3 px-4 rounded prod_bag w-1/10">
+							<div className="py-3 px-4 h-fit rounded prod_bag w-1/10">
 								<p className="font-xs">Appearance</p>
 								<h3 className="font-xl">{product && product.Appearance
  ? product.Appearance : '-' }</h3>
