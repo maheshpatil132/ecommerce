@@ -6,7 +6,7 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import AlterProfile from './AlterProfile';
 
 const BankDeteails = ({ setShowModal, user }) => {
-	const [profile, setProfile] = useState(user.profileBank)
+	const [profile, setProfile] = useState(user && user.profileBank)
 	console.log(user)
 
 	return (
@@ -17,7 +17,7 @@ const BankDeteails = ({ setShowModal, user }) => {
 					<button onClick={() => { setShowModal('bankDetails') }} className='text-white bg-[#004AA1] px-3 py-2 text-lg font-medium rounded-md w-fit'><AddCircleOutlineIcon className='mr-1 mb-1' fontSize='small' />Bank Details</button>
 
 					{
-						profile.length !== 0 ? 
+						profile && profile.length !== 0 ? 
 						profile.map((e) => {
 							return (
 								<div className="mt-3 rounded-md box_shadow border bg-white p-3">

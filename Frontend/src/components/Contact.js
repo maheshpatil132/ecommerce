@@ -5,7 +5,7 @@ import '../index.css';
 import AlterProfile from './AlterProfile';
 
 function Contact({ setShowModal, user, setVal }) {
-	const [profile, setProfile] = useState(user.profileContact)
+	const [profile, setProfile] = useState(user && user.profileContact)
 	console.log(user)
 	return (
 		<>
@@ -15,7 +15,7 @@ function Contact({ setShowModal, user, setVal }) {
 					<button onClick={() => { setShowModal('contact') }} className='text-white bg-[#004AA1] px-3 py-2 text-lg font-medium rounded-md w-fit'><AddCircleOutlineIcon className='mr-1 mb-1' fontSize='small' />Contacts</button>
 
 					{
-						profile.length !== 0 ?
+						profile && profile.length !== 0 ?
 							profile.map((e) => {
 								return (
 									<div className="mt-3 rounded-md box_shadow bg-white p-3 border">

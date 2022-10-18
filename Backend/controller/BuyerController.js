@@ -6,44 +6,44 @@ const sendtoken = require("../utils/jwttoken");
 const OrderModel = require("../models/OrderModel");
 
 
-exports.createbuyer = catchaysnc(async(req,res,next)=>{
-    const buyer = new db({...req.body})
-                 await buyer.save()
-   sendtoken(buyer,200,res)
+exports.createbuyer = catchaysnc(async (req, res, next) => {
+  const buyer = new db({ ...req.body })
+  await buyer.save()
+  sendtoken(buyer, 200, res)
 })
 
 // getbuyer list
-exports.getbuyers = catchaysnc(async(req,res,next)=>{
-    const buyers = await db.find()
-    res.json({
-        sucess:true,
-        buyers
-    })
-   
+exports.getbuyers = catchaysnc(async (req, res, next) => {
+  const buyers = await db.find()
+  res.json({
+    sucess: true,
+    buyers
+  })
+
 })
 
 // getsingle buyer
-exports.getsinglebuyer = catchaysnc(async(req,res,next)=>{
-    const id = req.params.id
+exports.getsinglebuyer = catchaysnc(async (req, res, next) => {
+  const id = req.params.id
 
   const buyer = await db.findById(id)
-  
-  if(!buyer){
-    return next("user not found",404)
+
+  if (!buyer) {
+    return next("user not found", 404)
   }
-  
+
   res.status(200).json({
-    success : true,
+    success: true,
     buyer
   })
 })
 
 
 // login buyer
-exports.loginbuyer = catchaysnc(async(req,res,next)=>{
-  const {email , password} = req.body
-   // check email or password is enterde or not
-   if (!email || !password) {
+exports.loginbuyer = catchaysnc(async (req, res, next) => {
+  const { email, password } = req.body
+  // check email or password is enterde or not
+  if (!email || !password) {
     return next(new Errorhandler('please enter email or paswwrod', 401))
   }
   //find user
@@ -87,49 +87,49 @@ exports.logoutbuyer = catchaysnc(async (req, res, next) => {
 
 
 // update Buyer profile
-exports.Updatebuyer = catchaysnc(async(req,res,next)=>{
-  const {id} = req.params
-  const user = await db.findByIdAndUpdate(id,{...req.body} ,{new:true})
-  if(!user){
-    return next(new Errorhandler('user not Found',404))
+exports.Updatebuyer = catchaysnc(async (req, res, next) => {
+  const { id } = req.params
+  const user = await db.findByIdAndUpdate(id, { ...req.body }, { new: true })
+  if (!user) {
+    return next(new Errorhandler('user not Found', 404))
   }
-  await user.save({validateBeforeSave:false})
- sendtoken(user,200,res)
+  await user.save({ validateBeforeSave: false })
+  sendtoken(user, 200, res)
 
 
 })
 
 
 // delete buyer
-exports.deletebuyer = catchaysnc(async(req,res,next)=>{
+exports.deletebuyer = catchaysnc(async (req, res, next) => {
   const buyer = await db.findByIdAndRemove(req.params.id);
-    if (!buyer) {
-      return next(new Errorhandler("Not Found", 404))
-    }
-    res.json({
-      success: true,
-      message: "deleted successfully",
-      buyer
-    })
+  if (!buyer) {
+    return next(new Errorhandler("Not Found", 404))
+  }
+  res.json({
+    success: true,
+    message: "deleted successfully",
+    buyer
+  })
 })
 
 
-exports.getallBuyerBids = catchaysnc(async(req,res,next)=>{
+exports.getallBuyerBids = catchaysnc(async (req, res, next) => {
   console.log(req.user.id)
-  const buyerbids = await db.findById(req.user.id, { bids:1 } ).populate('bids').populate([
-    { 
-      path: 'bids', 
-      populate: [{ path: 'product' }] ,
-      
+  const buyerbids = await db.findById(req.user.id, { bids: 1 }).populate('bids').populate([
+    {
+      path: 'bids',
+      populate: [{ path: 'product' }],
+
     }
   ])
-  if(!buyerbids){
-    return next(new Errorhandler('something went wrong please try to login',404))
+  if (!buyerbids) {
+    return next(new Errorhandler('something went wrong please try to login', 404))
   }
 
   res.status(200).json({
-   success:true,
-   buyerbids
+    success: true,
+    buyerbids
   })
 
 })
@@ -138,16 +138,16 @@ exports.getallBuyerBids = catchaysnc(async(req,res,next)=>{
 // hiren
 
 // buyer click accept bid
-exports.accpetquote = catchaysnc(async(req,res,next)=>{
-  const orderid=req.params.id;
+exports.accpetquote = catchaysnc(async (req, res, next) => {
+  const orderid = req.params.id;
 
   const data = await OrderModel.findByIdAndUpdate(
     orderid,
     { quote_status: "accepted" },
     { new: true }
   );
-  if(!data){
-    return next(new Errorhandler('order is not find',404))
+  if (!data) {
+    return next(new Errorhandler('order is not find', 404))
   }
   await data.save();
   res.status(200).json({
@@ -158,10 +158,10 @@ exports.accpetquote = catchaysnc(async(req,res,next)=>{
 
 
 // common route for auto login
-exports.autologin = catchaysnc(async(req,res,next)=>{
+exports.autologin = catchaysnc(async (req, res, next) => {
   const user = req.user
   res.status(200).json({
-    success:true,
+    success: true,
     user
   })
 })

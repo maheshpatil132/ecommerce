@@ -61,7 +61,7 @@ const BuyerModel = mongoose.Schema({
   },
   profileAddress: [
     {
-      type: String,
+      adtype: String,
       name: String,
       mobile: Number,
       address: String
@@ -74,7 +74,7 @@ const BuyerModel = mongoose.Schema({
       accountNo: Number,
       bankName: String,
       branchName: String,
-      primary: Boolean
+      primary: String
     }
   ],
   profileContact: [

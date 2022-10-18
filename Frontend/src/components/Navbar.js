@@ -10,7 +10,7 @@ import LocalConvenienceStoreIcon from '@mui/icons-material/LocalConvenienceStore
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import Inventory2Icon      from '@mui/icons-material/Inventory2'; 
+import Inventory2Icon from '@mui/icons-material/Inventory2';
 import PaymentIcon from '@mui/icons-material/Payment';
 
 import { NavLink } from 'react-router-dom'
@@ -25,7 +25,7 @@ const Navbar = ({ role }) => {
 
   const [product_li, setProduct_li] = useState(false)
 
-  const {user} = useSelector(state=>state.user)
+  const { user } = useSelector(state => state.user)
 
   return (
     <div className='navbar   h-screen overflow-y-scroll flex flex-col justify-between text-base px-2'>
@@ -102,6 +102,13 @@ const Navbar = ({ role }) => {
 
             role === 'seller' &&
             <>
+              <NavLink to={`/buyer/profile/${user._id}`} className='flex cursor-pointer dash_menu_li p-3 px-5 rounded-lg  items-center justify-between  '>
+                <div className='flex gap-6 items-center'>
+                  <AccountBoxIcon size={18} />
+                  Profile
+                </div>
+                <MdKeyboardArrowRight size={18} />
+              </NavLink>
               <NavLink to={'/enqires'} className='flex cursor-pointer dash_menu_li p-3 px-5 rounded-lg  items-center justify-between  '>
                 <div className='flex gap-6 items-center'>
                   <MdPayment size={18} />

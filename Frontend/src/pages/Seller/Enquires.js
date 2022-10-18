@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Header from '../../components/Header'
 import SearchBox from '../../components/SearchBox'
-import Box from '../../components/Box' 
+import Box from '../../components/Box'
 import Heading from '../../components/Heading'
 import SellerBidBox from '../../components/SellerBidBox'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
@@ -32,7 +32,7 @@ const Enquires = () => {
       console.log(data.data.bids)
       setData(data.data.bids)
       setSellerid(data.data.sellerid)
-    }).catch((error)=>{
+    }).catch((error) => {
       console.log(error);
     })
   }, [])
@@ -64,25 +64,22 @@ const Enquires = () => {
           <div className="box_cont flex gap-5">
             <div
               onClick={status_live}
-              className={`text-sm box_shadow border flex flex-col gap-2  box_shadow rounded-lg py-3 cursor-pointer w-44 px-3 ${
-                status === 'live' && 'bg-buyer-primary text-white'
-              } `}
+              className={`text-sm box_shadow border flex flex-col gap-2  box_shadow rounded-lg py-3 cursor-pointer w-44 px-3 ${status === 'live' && 'bg-buyer-primary text-white'
+                } `}
             >
               <Box bids={data} content={'Live'} />
             </div>
             <div
               onClick={status_pending}
-              className={`text-sm box_shadow border flex flex-col gap-2  box_shadow rounded-lg py-3 cursor-pointer w-44 px-3 ${
-                status === 'pending' && 'bg-buyer-primary text-white'
-              } `}
+              className={`text-sm box_shadow border flex flex-col gap-2  box_shadow rounded-lg py-3 cursor-pointer w-44 px-3 ${status === 'pending' && 'bg-buyer-primary text-white'
+                } `}
             >
               <Box bids={data} content={'Pending'} />
             </div>
             <div
               onClick={status_previous}
-              className={`text-sm box_shadow border flex flex-col gap-2  box_shadow rounded-lg py-3 cursor-pointer w-44 px-3 ${
-                status === 'previous' && 'bg-buyer-primary text-white'
-              } `}
+              className={`text-sm box_shadow border flex flex-col gap-2  box_shadow rounded-lg py-3 cursor-pointer w-44 px-3 ${status === 'previous' && 'bg-buyer-primary text-white'
+                } `}
             >
               <Box bids={data} content={'Previous'} />
             </div>
@@ -97,7 +94,7 @@ const Enquires = () => {
                 {data.map((e, key) => {
                   return e.bids.map((data, key) => {
                     return sellerid === data.seller &&
-                      data.price === null &&
+                      // data.price === 0 &&
                       status === 'live' ? (
                       <SellerBidBox e={e} sellerid={sellerid} />
                     ) : (
@@ -169,50 +166,50 @@ const Enquires = () => {
                           {data.map((e, key) => {
                             return status === 'previous'
                               ? e.winner.map((data, key) => {
-                                  return sellerid === data.seller ? (
-                                    <tbody>
-                                      <tr className="border-b h-12 hover:border-2  hover:border-blue-300 text-center">
-                                        <td class="px-6 py-4 text-blue-400  whitespace-nowrap text-sm font-medium ">
-                                          <ChevronRightIcon />
-                                        </td>
-                                        <td class="text-sm text-blue-500 text-1xl  font-light px-6 py-4 whitespace-nowrap">
-                                          {e._id}
-                                        </td>
-                                        <td class="text-sm  font-light px-6 py-4 whitespace-nowrap">
-                                          {e.product}
-                                        </td>
-                                        <td class="text-sm   font-light px-6 py-4 whitespace-nowrap  ">
-                                          {e.quantity}
-                                        </td>
+                                return sellerid === data.seller ? (
+                                  <tbody>
+                                    <tr className="border-b h-12 hover:border-2  hover:border-blue-300 text-center">
+                                      <td class="px-6 py-4 text-blue-400  whitespace-nowrap text-sm font-medium ">
+                                        <ChevronRightIcon />
+                                      </td>
+                                      <td class="text-sm text-blue-500 text-1xl  font-light px-6 py-4 whitespace-nowrap">
+                                        {e._id}
+                                      </td>
+                                      <td class="text-sm  font-light px-6 py-4 whitespace-nowrap">
+                                        {e.product}
+                                      </td>
+                                      <td class="text-sm   font-light px-6 py-4 whitespace-nowrap  ">
+                                        {e.quantity}
+                                      </td>
 
-                                        <td class="text-sm  rounded-md px-6 py-4  font-light  ">
-                                          {' '}
-                                          <p className="px-2 py-1 bg-[#A9FEC6] text-[#005E25] rounded-lg text-center ">
-                                            Accepted
-                                          </p>
-                                        </td>
+                                      <td class="text-sm  rounded-md px-6 py-4  font-light  ">
+                                        {' '}
+                                        <p className="px-2 py-1 bg-[#A9FEC6] text-[#005E25] rounded-lg text-center ">
+                                          Accepted
+                                        </p>
+                                      </td>
 
-                                        <td class="text-sm   font-[600] text-[14px] px-6 py-4 whitespace-nowrap flex justify-center">
-                                          <CurrencyRupeeIcon
-                                            sx={{ width: '20px' }}
-                                          />
-                                          {e.bids.map((data, key) => {
-                                            return (
-                                              <div className="flex">
-                                                <p>
-                                                  {' '}
-                                                  {sellerid === data.seller
-                                                    ? data.price
-                                                    : ''}{' '}
-                                                </p>
-                                              </div>
-                                            )
-                                          })}
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  ) : e.bids.map((info,key)=>{
-                                    return sellerid===info.seller&&info.price!==null?  <tbody>
+                                      <td class="text-sm   font-[600] text-[14px] px-6 py-4 whitespace-nowrap flex justify-center">
+                                        <CurrencyRupeeIcon
+                                          sx={{ width: '20px' }}
+                                        />
+                                        {e.bids.map((data, key) => {
+                                          return (
+                                            <div className="flex">
+                                              <p>
+                                                {' '}
+                                                {sellerid === data.seller
+                                                  ? data.price
+                                                  : ''}{' '}
+                                              </p>
+                                            </div>
+                                          )
+                                        })}
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                ) : e.bids.map((info, key) => {
+                                  return sellerid === info.seller && info.price !== null ? <tbody>
                                     <tr className="border-b h-12 hover:border-2  hover:border-blue-300 text-center">
                                       <td class="px-6 py-4 text-blue-400  whitespace-nowrap text-sm font-medium ">
                                         <ChevronRightIcon />
@@ -252,53 +249,53 @@ const Enquires = () => {
                                         })}
                                       </td>
                                     </tr>
-                                  </tbody>: sellerid===info.seller&&info.price===null?<tbody>
-                                  {console.log(info.price)}
-                                  <tr className="border-b h-12 hover:border-2  hover:border-blue-300 text-center">
-                                    <td class="px-6 py-4 text-blue-400  whitespace-nowrap text-sm font-medium ">
-                                      <ChevronRightIcon />
-                                    </td>
-                                    <td class="text-sm text-blue-500 text-1xl  font-light px-6 py-4 whitespace-nowrap">
-                                      {e._id}
-                                    </td>
-                                    <td class="text-sm  font-light px-6 py-4 whitespace-nowrap">
-                                      {e.product}
-                                    </td>
-                                    <td class="text-sm   font-light px-6 py-4 whitespace-nowrap  ">
-                                      {e.quantity}
-                                    </td>
+                                  </tbody> : sellerid === info.seller && info.price === null ? <tbody>
+                                    {console.log(info.price)}
+                                    <tr className="border-b h-12 hover:border-2  hover:border-blue-300 text-center">
+                                      <td class="px-6 py-4 text-blue-400  whitespace-nowrap text-sm font-medium ">
+                                        <ChevronRightIcon />
+                                      </td>
+                                      <td class="text-sm text-blue-500 text-1xl  font-light px-6 py-4 whitespace-nowrap">
+                                        {e._id}
+                                      </td>
+                                      <td class="text-sm  font-light px-6 py-4 whitespace-nowrap">
+                                        {e.product}
+                                      </td>
+                                      <td class="text-sm   font-light px-6 py-4 whitespace-nowrap  ">
+                                        {e.quantity}
+                                      </td>
 
-                                    <td class="text-sm  rounded-md px-6 py-4  font-light  ">
-                                      {' '}
-                                      <p className="px-2 py-1 bg-[#daff9b] text-[#866767] rounded-lg text-center ">
-                                        Missing
-                                      </p>
-                                    </td>
+                                      <td class="text-sm  rounded-md px-6 py-4  font-light  ">
+                                        {' '}
+                                        <p className="px-2 py-1 bg-[#daff9b] text-[#866767] rounded-lg text-center ">
+                                          Missing
+                                        </p>
+                                      </td>
 
-                                    <td class="text-sm   font-[600] text-[14px] px-6 py-4 whitespace-nowrap flex justify-center">
-                                      <CurrencyRupeeIcon
-                                        sx={{ width: '20px' }}
-                                      />
-                                      {e.bids.map((data, key) => {
-                                        return (
-                                          <div className="flex">
-                                            <p>
-                                              {' '}
-                                              {sellerid === data.seller
-                                                ? e.buyer_Price
-                                                : ''}{' '}
-                                            </p>
-                                          </div>
-                                        )
-                                      })}
-                                    </td>
-                                  </tr>
-                                </tbody>:""
+                                      <td class="text-sm   font-[600] text-[14px] px-6 py-4 whitespace-nowrap flex justify-center">
+                                        <CurrencyRupeeIcon
+                                          sx={{ width: '20px' }}
+                                        />
+                                        {e.bids.map((data, key) => {
+                                          return (
+                                            <div className="flex">
+                                              <p>
+                                                {' '}
+                                                {sellerid === data.seller
+                                                  ? e.buyer_Price
+                                                  : ''}{' '}
+                                              </p>
+                                            </div>
+                                          )
+                                        })}
+                                      </td>
+                                    </tr>
+                                  </tbody> : ""
 
-                                  })
-                                 
-                                  
                                 })
+
+
+                              })
                               : ''
                           })}
                         </table>

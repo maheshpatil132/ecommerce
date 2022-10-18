@@ -11,47 +11,40 @@ const SellerModel = mongoose.Schema({
   },
   employees: {
     type: Number,
-    
+
   },
-  companyName:{
-    type:String
+  companyName: {
+    type: String
   },
-  address:{
-    type:String
+  address: {
+    type: String
   },
   Category: {
     type: String,
-    required: true
   },
-  Area:{
-    type:String,
-    required:true
-},
-cin:{
-  type:String,
-  required:true
-},
-gst:{
-  type:String,
-  required:true
-},
+  Area: {
+    type: String,
+  },
+  cin: {
+    type: String,
+  },
+  gst: {
+    type: String,
+  },
 
-mobile:{
-  type:Number,
-  required:true
-},
-capacity:{
-  type:Number,
-  required:true
-},
-linkedin:{
-  type:String,
-  
-},
-about:{
-  type:String,
-  required:true
-},
+  mobile: {
+    type: Number,
+  },
+  capacity: {
+    type: String,
+  },
+  linkedin: {
+    type: String,
+
+  },
+  about: {
+    type: String,
+  },
 
   email: {
     type: String,
@@ -66,7 +59,32 @@ about:{
     type: String,
     default: "seller"
   },
-  
+  profileAddress: [
+    {
+      adtype: String,
+      name: String,
+      mobile: Number,
+      address: String
+    }
+  ],
+  profileBank: [
+    {
+      name: String,
+      ifsc: String,
+      accountNo: Number,
+      bankName: String,
+      branchName: String,
+      primary: String
+    }
+  ],
+  profileContact: [
+    {
+      name: String,
+      role: String,
+      mobile: Number,
+      email: String
+    }
+  ],
   products: [
     {
       type: mongoose.SchemaTypes.ObjectId,
