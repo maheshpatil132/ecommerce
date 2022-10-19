@@ -102,7 +102,7 @@ const Navbar = ({ role }) => {
 
             role === 'seller' &&
             <>
-              <NavLink to={`/buyer/profile/${user._id}`} className='flex cursor-pointer dash_menu_li p-3 px-5 rounded-lg  items-center justify-between  '>
+              <NavLink to={`/seller/profile/${user._id}`} className='flex cursor-pointer dash_menu_li p-3 px-5 rounded-lg  items-center justify-between  '>
                 <div className='flex gap-6 items-center'>
                   <AccountBoxIcon size={18} />
                   Profile
@@ -124,17 +124,6 @@ const Navbar = ({ role }) => {
                 </div>
                 <MdKeyboardArrowRight size={18} />
               </NavLink>
-
-
-
-              <NavLink to={'/products'} className={`flex cursor-pointer dash_menu_li  p-3 px-5 rounded-lg  items-center justify-between`}>
-                <div className='flex gap-6 items-center'>
-                  <FaTruck size={18} />
-                  Products
-                </div>
-                <MdKeyboardArrowRight size={18} />
-              </NavLink>
-
               <NavLink to={'/Payment'} className={`flex cursor-pointer dash_menu_li  p-3 px-5 rounded-lg  items-center justify-between`}>
                 <div className='flex gap-6 items-center'>
                   <FaTruck size={18} />

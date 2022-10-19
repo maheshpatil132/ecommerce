@@ -8,154 +8,161 @@ const OrderModel = require("../models/OrderModel");
 
 
 // create admin
-exports.createadmin = catchaysnc(async(req,res,next)=>{
-    const admin = new db({...req.body})
-    await admin.save()
-    sendtoken(admin,200,res)
+exports.createadmin = catchaysnc(async (req, res, next) => {
+  const admin = new db({ ...req.body })
+  await admin.save()
+  sendtoken(admin, 200, res)
 })
 
 
 // login seller
-exports.loginadmin = catchaysnc(async(req,res,next)=>{
-    const {email , password} = req.body
-     // check email or password is enterde or not
-     if (!email || !password) {
-      return next(new Errorhandler('please enter email or paswwrod', 401))
-    }
-    //find user
-    const user = await db.findOne({ email }).select("+password")
-    //if user not found send error message
-    if (!user) {
-      return next(new Errorhandler('user not found : Invalid email or password', 404))
-    }
-    //check the passwrod is correct or not
-    const isMatch = await user.comparePassword(password)
-    if (!isMatch) {
-      return next(new Errorhandler('Invalid Email or Password'), 404)
-    }
-    //create token and store it in cookie
-    sendtoken(user, 200, res);
-  })
-  
+exports.loginadmin = catchaysnc(async (req, res, next) => {
+  const { email, password } = req.body
+  // check email or password is enterde or not
+  if (!email || !password) {
+    return next(new Errorhandler('please enter email or paswwrod', 401))
+  }
+  //find user
+  const user = await db.findOne({ email }).select("+password")
+  //if user not found send error message
+  if (!user) {
+    return next(new Errorhandler('user not found : Invalid email or password', 404))
+  }
+  //check the passwrod is correct or not
+  const isMatch = await user.comparePassword(password)
+  if (!isMatch) {
+    return next(new Errorhandler('Invalid Email or Password'), 404)
+  }
+  //create token and store it in cookie
+  sendtoken(user, 200, res);
+})
+
 
 
 
 // approve seller
-exports.aproveseller = catchaysnc(async(req,res,next)=>{
-  const {id} = req.params
-  
+exports.aproveseller = catchaysnc(async (req, res, next) => {
+  const { id } = req.params
+
   // update seller
-  const seller = await SellerModel.findByIdAndUpdate(id,{Aprroved:true},{new:true})
-  if(!seller){
-    return next(new Errorhandler("seller not exist",404))
+  const seller = await SellerModel.findByIdAndUpdate(id, { Aprroved: true }, { new: true })
+  if (!seller) {
+    return next(new Errorhandler("seller not exist", 404))
   }
   await seller.save()
 
   // delete request
-  const admin = await db.findOne({email:process.env.Admin_email})
-  
-  const result = admin.sellerReq.filter(re=>re._id.toString() !== id.toString())
- 
-  await admin.updateOne({sellerReq:result},{new:true})
+  const admin = await db.findOne({ email: process.env.Admin_email })
+
+  const result = admin.sellerReq.filter(re => re._id.toString() !== id.toString())
+
+  await admin.updateOne({ sellerReq: result }, { new: true })
 
   admin.save()
 
-  sendtoken(admin,200,res)
+  sendtoken(admin, 200, res)
 })
 
 
 
 // reject seller
-exports.rejectseller = catchaysnc(async(req,res,next)=>{
-  const {id} = req.params
+exports.rejectseller = catchaysnc(async (req, res, next) => {
+  const { id } = req.params
   const seller = await SellerModel.findByIdAndRemove(id)
-  if(!seller){
-    return next(new Errorhandler("seller not exist",404))
+  if (!seller) {
+    return next(new Errorhandler("seller not exist", 404))
   }
   await seller.save()
 
   // delete request
-  const admin = await db.findOne({email:process.env.Admin_email})
-  
-  const result = admin.sellerReq.filter(re=>re._id.toString() !== id.toString())
-  
-  await admin.updateOne({sellerReq:result},{new:true})
+  const admin = await db.findOne({ email: process.env.Admin_email })
+
+  const result = admin.sellerReq.filter(re => re._id.toString() !== id.toString())
+
+  await admin.updateOne({ sellerReq: result }, { new: true })
   admin.save()
-  sendtoken(admin,200,res)
+  sendtoken(admin, 200, res)
 })
 
 
 // add product
-exports.addproduct = catchaysnc(async(req,res,next)=>{
+exports.addproduct = catchaysnc(async (req, res, next) => {
 
   const addreq = req.body
-  console.log(addreq)
-  const user = await SellerModel.findByIdAndUpdate(addreq.sellers , {$push:{
-    products : addreq.product
-  }} , {new:true})
-  const products = await ProductModel.findByIdAndUpdate(addreq.products ,{$push:{
-     sellers: addreq.seller
-  }} , {new:true})
-  
 
-  const requests = await db.findOneAndUpdate({email:process.env.Admin_email}, {
-    $pull:{
-      AddprodReq: { 
+  const user = await SellerModel.findByIdAndUpdate(addreq.sellers, {
+    $push: {
+      products: addreq.products
+    }
+  }, { new: true })
+
+
+  if (!user) {
+    return next(new Errorhandler('seller not exist', 404))
+  }
+
+  const products = await ProductModel.findByIdAndUpdate(addreq.products, {
+    $push: {
+      sellers: addreq.sellers
+    }
+  }, { new: true })
+
+  if (!products) {
+    return next(new Errorhandler('product not exist', 404))
+  }
+
+
+  await user.save()
+  await products.save()
+
+  const requests = await db.findOneAndUpdate({ email: process.env.Admin_email }, {
+    $pull: {
+      AddprodReq: {
         seller: addreq.sellers,
         product: addreq.products
       }
     }
   }).populate('AddprodReq.seller').populate('AddprodReq.product')
 
-  if(!requests){
-    return next(new Errorhandler(404,"something went wrong"))
+  if (!requests) {
+    return next(new Errorhandler(404, "something went wrong"))
   }
 
   await requests.save()
-   
-  if(!user){
-    return next(new Errorhandler('seller not exist',404))
-  }
 
-  if(!products){
-    return next(new Errorhandler('product not exist',404))
-  }
-   await user.save()
-   await products.save()
-   
-   res.status(200).json({
-    sucess:true,
-    message:"product added sucessfully",
+
+  res.status(200).json({
+    sucess: true,
+    message: "product added sucessfully",
     requests
-   })
+  })
 })
 
 
 
-
 // get all seller request
-exports.getallsellerrequest = catchaysnc(async (req,res,next)=>{
+exports.getallsellerrequest = catchaysnc(async (req, res, next) => {
   const email = process.env.Admin_email
-  const admin = await db.findOne({email:email}).populate('sellerReq')
-  if(!admin){
-    return next(new Errorhandler('admin not found',404))
+  const admin = await db.findOne({ email: email }).populate('sellerReq')
+  if (!admin) {
+    return next(new Errorhandler('admin not found', 404))
   }
   res.status(200).json({
-    sucess:true,
+    sucess: true,
     admin
   })
 })
 
 
 // get all add prod request
-exports.getalladdprodrequest = catchaysnc(async (req,res,next)=>{
+exports.getalladdprodrequest = catchaysnc(async (req, res, next) => {
   const email = process.env.Admin_email
-  const addrequs = await db.findOne({email:email},{Addreqs:1}).populate('AddprodReq.seller').populate('AddprodReq.product')
-  if(!addrequs){
-    return next(new Errorhandler('something Went Wrong',404))
+  const addrequs = await db.findOne({ email: email }, { Addreqs: 1 }).populate('AddprodReq.seller').populate('AddprodReq.product')
+  if (!addrequs) {
+    return next(new Errorhandler('something Went Wrong', 404))
   }
   res.status(200).json({
-    sucess:true,
+    sucess: true,
     addrequs
   })
 })
@@ -196,7 +203,7 @@ exports.adminclickprocess = catchaysnc(async (req, res, next) => {
 exports.sendrfqadmin = catchaysnc(async (req, res, next) => {
   const id = req.body.id;
   const sellerdata = req.body.sellers;
-  const sellersId = sellerdata.map(e=> e.seller)
+  const sellersId = sellerdata.map(e => e.seller)
   let seller;
 
   // console.log(sellerdata);
@@ -206,26 +213,26 @@ exports.sendrfqadmin = catchaysnc(async (req, res, next) => {
     { new: true }
   );
 
-  if(!updatestate){
-    return next(new Errorhandler('order not Exist',404))
+  if (!updatestate) {
+    return next(new Errorhandler('order not Exist', 404))
   }
-  
 
-  const sellers = await SellerModel.updateMany({_id: { $in : sellersId}}, {
+
+  const sellers = await SellerModel.updateMany({ _id: { $in: sellersId } }, {
     $push: {
       bids: id,
     },
   })
 
-  if(!sellers){
-    await SellerModel.updateMany({_id: { $in : sellersId}}, {
+  if (!sellers) {
+    await SellerModel.updateMany({ _id: { $in: sellersId } }, {
       $pull: {
         bids: id,
       },
     })
   }
 
-  
+
   await updatestate.save();
 
   res.status(200).json({
@@ -238,16 +245,16 @@ exports.sendrfqadmin = catchaysnc(async (req, res, next) => {
 
 // when admin update price of seller quote
 exports.adminupdateprice = catchaysnc(async (req, res, next) => {
-  const orderid = req.params.id; 
+  const orderid = req.params.id;
   const price = req.body.kimat;
   const data = await OrderModel.findByIdAndUpdate(orderid, {
     buyer_Price: price,
   });
-  
- await data.save()
+
+  await data.save()
   res.status(200).json({
     sucess: true,
-   data
+    data
   })
-  
+
 });

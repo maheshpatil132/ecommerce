@@ -54,7 +54,7 @@ function AllProducts() {
                                         {/*content*/}
 
                                         {showModal === true &&
-                                            <SearchPopUp setShowModal={setShowModal} />
+                                            <SearchPopUp setShowModal={setShowModal} products={products} />
                                         }
                                         {showModal === "prodReq" &&
                                             <ProductReqpopUp setShowModal={setShowModal} />

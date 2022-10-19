@@ -43,7 +43,7 @@ const SearchPopUp = ({ setShowModal, products }) => {
           <div className=' flex flex-col h-[200px] overflow-y-scroll'>
             {
 
-              products.map((elem, index) => {
+              products && products.map((elem, index) => {
                 return (
 
                   <div key={elem._id} className=' bg-white p-1 border items-center gap-1 flex justify-between'>

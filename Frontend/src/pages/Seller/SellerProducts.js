@@ -26,14 +26,12 @@ function AllProducts({ id, user1 }) {
     const redirects = (id) => {
         navigate(`/prod/${id}`)
     }
-
-
+    
     useEffect(() => {
         setProducts(product)
     }, [])
 
-    console.log(id)
-    console.log(user1.products)
+    console.log(user1)
 
     return (
         <>
@@ -55,7 +53,7 @@ function AllProducts({ id, user1 }) {
                                         {/*content*/}
 
                                         {showModal === true &&
-                                            <SearchPopUp setShowModal={setShowModal} />
+                                            <SearchPopUp setShowModal={setShowModal} products={products} />
                                         }
                                         {showModal === "prodReq" &&
                                             <ProductReqpopUp setShowModal={setShowModal} />

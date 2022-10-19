@@ -13,8 +13,8 @@ const LoginBuyer =  app.post('/login/buyer' , loginbuyer)
 const LogoutBuyer = app.get('/logout/buyer',logoutbuyer)
 const UpdateBuyer = app.put('/update/buyer/:id',isAutharization, autherizesrole('buyer','admin') ,Updatebuyer)
 const DeleteBuyer =  app.delete('/buyer/:id', isAutharization ,autherizesrole('admin'),deletebuyer)
-const GetBuyerBids =  app.get('/getall/buyer/bids' , isAutharization , getallBuyerBids )
-const Accpetquote=app.put("/buyer/accpetquote/:id",isAutharization, accpetquote)
+const GetBuyerBids = app.get('/getall/buyer/bids', isAutharization, autherizesrole('buyer','admin') , getallBuyerBids )
+const Accpetquote = app.put("/buyer/accpetquote/:id", isAutharization, autherizesrole('buyer', 'admin'), accpetquote)
 const AutoLogin = app.get('/auto/login', isOurUser , autologin)
 
 

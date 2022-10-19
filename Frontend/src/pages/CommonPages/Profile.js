@@ -58,15 +58,6 @@ const Profile = () => {
 		}
 		getdata()
 
-		const adminCheck = async () => {
-			await Axios.get('/isAdmin').then((res) => {
-				setAdmin(res.success)
-				console.log(res.success)
-			}).catch((error) => {
-				console.log(error);
-			})
-		}
-		adminCheck()
 	}, [])
 
 	const handletabs = (e, val) => {

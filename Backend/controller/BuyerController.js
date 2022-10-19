@@ -94,8 +94,12 @@ exports.Updatebuyer = catchaysnc(async (req, res, next) => {
     return next(new Errorhandler('user not Found', 404))
   }
   await user.save({ validateBeforeSave: false })
-  sendtoken(user, 200, res)
 
+  res.status(200).json({
+    success: true,
+    message: "profile updated successfully",
+    user
+  })
 
 })
 
