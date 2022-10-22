@@ -6,10 +6,10 @@ import { useParams } from 'react-router-dom'
 // import './App.css';
 
 function ContactPopUp({ setShowModal, user, setUser }) {
-    const [name, setname] = useState(user.name ? user.name : "")
-    const [crole, setcrole] = useState(user.role ? user.role : "")
-    const [mobile, setmobile] = useState(user.mobile ? user.mobile : "")
-    const [email, setemail] = useState(user.email ? user.email : "")
+    const [name, setname] = useState()
+    const [crole, setcrole] = useState()
+    const [mobile, setmobile] = useState()
+    const [email, setemail] = useState()
     const [profile, setProfile] = useState(user.profileContact)
     console.log(profile)
     const newp = {
@@ -75,7 +75,7 @@ function ContactPopUp({ setShowModal, user, setUser }) {
                                 <p className='mb-1'>Mobile Number</p>
                                 <div className="flex justify-between my-1">
                                     <input value={mobile} onChange={handlemobile} required type="text" className='bg-white rounded-md py-2 px-4 w-48 border border-gray-400 target::border-[#0377EB]' placeholder='Enter the Number' />
-                                    <button className='bg-[#1672DE] p-1 text-xs rounded-md text-white'>Send Otp</button>
+                                    <button className='bg-[#004AA1] p-1 text-xs rounded-md text-white'>Send Otp</button>
                                 </div>
                             </div>
 
@@ -83,7 +83,7 @@ function ContactPopUp({ setShowModal, user, setUser }) {
                                 <p className='mb-1'>OTP</p>
                                 <div className="flex justify-between">
                                     <input required type="text" className='bg-white rounded-md py-2 px-4 w-44 border border-gray-400 target::border-[#0377EB]' placeholder='Enter OTP' />
-                                    <button className='bg-[#1672DE] p-1 text-sm rounded-md text-white'>Verify Otp</button>
+                                    <button className='bg-[#004AA1] p-1 text-sm rounded-md text-white'>Verify Otp</button>
                                 </div>
                             </div>
                         </div>
@@ -95,7 +95,7 @@ function ContactPopUp({ setShowModal, user, setUser }) {
                     </div>
 
                     <div className="text-end mt-2">
-                        <button onClick={() => { setShowModal(false); handleSubmit() }} className='bg-[#1672DE] px-3 py-2 mt-4 text-white rounded-md'>Submit</button>
+                        <button onClick={() => { setShowModal(false); handleSubmit() }} className='bg-[#004AA1] px-3 py-2 mt-4 text-white rounded-md'>Submit</button>
                     </div>
                 </div>
             </div>

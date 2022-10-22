@@ -34,25 +34,25 @@ const PORT = process.env.PORT || 5000
 
 
 require("dotenv").config({path: "./app.env"});
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const client = require("twilio")(accountSid, authToken);
+// const accountSid = process.env.TWILIO_ACCOUNT_SID;
+// const authToken = process.env.TWILIO_AUTH_TOKEN;
+// const client = require("twilio")(accountSid, authToken);
 
-app.post("/send/otp", async (req, res) => {
-  console.log(req.body.mobile);
-  await client.verify.v2
-    .services("VAeef441a312c66361c551e075ef2b452a")
-    .verifications.create({ to:req.body.mobile , channel: "sms" })
-    .then((verification) => console.log(verification.status));
-});
+// app.post("/send/otp", async (req, res) => {
+//   console.log(req.body.mobile);
+//   await client.verify.v2
+//     .services("VAeef441a312c66361c551e075ef2b452a")
+//     .verifications.create({ to:req.body.mobile , channel: "sms" })
+//     .then((verification) => console.log(verification.status));
+// });
 
-app.post("/varify/otp", async (req, res) => {
-  console.log(req.body);
-  await client.verify.v2
-    .services("VAeef441a312c66361c551e075ef2b452a")
-    .verificationChecks.create({ to:req.body.mobile , code: req.body.otp })
-    .then((verification_check) => res.send(verification_check.status));
-});
+// app.post("/varify/otp", async (req, res) => {
+//   console.log(req.body);
+//   await client.verify.v2
+//     .services("VAeef441a312c66361c551e075ef2b452a")
+//     .verificationChecks.create({ to:req.body.mobile , code: req.body.otp })
+//     .then((verification_check) => res.send(verification_check.status));
+// });
 
 // product routes
 app.use(CreateProduct)

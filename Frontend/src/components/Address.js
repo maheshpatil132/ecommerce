@@ -7,7 +7,7 @@ import AlterProfile from './AlterProfile';
 
 const Address = ({ setShowModal, user }) => {
     const [profile, setProfile] = useState(user && user.profileAddress)
-    console.log(user)
+    // console.log(user.profileAddress)
 
     return (
         <>

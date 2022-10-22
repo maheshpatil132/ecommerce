@@ -20,35 +20,36 @@ import SellerProducts from '../Seller/SellerProducts';
 import Enquires from '../Seller/Enquires';
 import Sellerorderhistory from '../Seller/Sellerorderhistory';
 import Payment from '../../components/Buyer/Payment/Payment';
-import Bidding from '../Buyer/Bidding';
-import TrackShipmentContent from '../../components/Buyer/Track_shipemt/TrackShipmentContent';
-import History from '../../components/Buyer/Order/History';
+import AdminBidding from '../Buyer/AdminBidding';
+import AdminOrderHistory from '../Buyer/AdminOrderHistory';
+import AdminTrackShipment from '../Buyer/AdminTrackShpiment';
 
 
 const Profile = () => {
 	const [value, setValue] = useState(0)
 	const [val, setVal] = useState()
 	const [user, setUser] = useState()
-	const [admin, setAdmin] = useState()
+	const [admin, setAdmin] = useState(true)
 
 	const data = useSelector(state => state.user)
 	console.log(data.user.role)
 
-	
+
 	const [showModal, setShowModal] = React.useState(false);
 	const { id } = useParams()
 	const { role } = useParams()
-	
-	
+
+
 	useEffect(() => {
 		data.user.role === 'admin' ? setAdmin(true) : setAdmin(false)
 		const getdata = async () => {
 			await Axios.get(`/${role}/${id}`).then((res) => {
 				if (role === 'buyer') {
-
+					console.log(res.data.buyer)
 					setUser(res.data.buyer)
 				}
 				if (role === "seller") {
+					console.log(res.data.seller)
 					setUser(res.data.seller)
 				}
 
@@ -192,17 +193,17 @@ const Profile = () => {
 						{
 							role === 'buyer' &&
 							value === 3 &&
-							<Bidding />
+							<AdminBidding user={user} />
 						}
 						{
 							role === 'buyer' &&
 							value === 4 &&
-							<History />
+							<AdminOrderHistory user={user} />
 						}
 						{
 							role === 'buyer' &&
 							value === 5 &&
-							<TrackShipmentContent />
+							<AdminTrackShipment user={user} />
 						}
 						{
 							role === 'buyer' &&

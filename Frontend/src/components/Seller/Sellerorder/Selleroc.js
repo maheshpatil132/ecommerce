@@ -16,24 +16,14 @@ export default function History() {
 	const [status, setStatus] = useState('preparing')
 
 	useEffect(() => {
-		Axios.get('/seller/enquries').then((data) => {
+		Axios.get('/get/enquries').then((data) => {
 			console.log(data.data.bids)
 			setData(data.data.bids)
 			setSellerid(data.data.sellerid)
 		})
+	}, [status])
 
-		const getdata = async () => {
-			try {
-				await Axios.get('/getall/buyer/bids').then((res) => {
-					setBids(res.data.buyerbids.bids)
-					console.log(bids)
-				})
-			} catch (error) {
-				console.log(error);
-			}
-		}
-		getdata()
-	}, [])
+	console.log(sellerid)
 
 	const status_preparing = () => {
 		setStatus('preparing')
@@ -76,134 +66,177 @@ export default function History() {
 						<div className="overflow-hidden">
 
 							{
-								status === 'preparing' ?
-									bids.filter(bid => bid.order_status === 'preparing').length > 0 ?
-										<div>
-											<div className="flex">
-												<div className="text-sm px-6  w-1/4 font-medium text-gray-900 py-4">
-													Rfq No
+								status === 'preparing' &&
+								<div>
+									{
+										data.filter(bid => bid.order_status === 'preparing').length > 0 ?
+											<div>
+												<div className="flex">
+													<div className="text-sm px-6  w-1/4 font-medium text-gray-900 py-4">
+														Rfq No
+													</div>
+													<div className="text-sm px-6  w-1/4 font-medium text-gray-900 py-4">
+														Product Name
+													</div>
+													<div className="text-sm px-6  w-1/6 font-medium text-gray-900 py-4">
+														Quantity
+													</div>
+													{/* <div className="text-sm px-6 w-1/6  font-medium text-gray-900 py-4">
+														Status
+													</div> */}
+													<div className="text-sm px-6 w-1/6  font-medium text-gray-900 py-4">
+														Price
+													</div>
+													<div className="text-sm  w-1/6 font-medium text-gray-900 py-4">
+													</div>
 												</div>
-												<div className="text-sm px-6  w-1/4 font-medium text-gray-900 py-4">
-													Product Name
-												</div>
-												<div className="text-sm px-6  w-1/6 font-medium text-gray-900 py-4">
-													Quantity
-												</div>
-												<div className="text-sm px-6 w-1/6  font-medium text-gray-900 py-4">
-													Status
-												</div>
-												<div className="text-sm px-6 w-1/6  font-medium text-gray-900 py-4">
-													Price
-												</div>
-												<div className="text-sm  w-1/6 font-medium text-gray-900 py-4">
-												</div>
-											</div>
-											{
-												data.filter((bid) => bid.order_status === 'preparing').map((e, key) => {
-													return e.winner.map((data, key) => {
-														return sellerid === data.seller ? (
-															<div key={e._id} className="flex my-1 border rounded-md hover:border-blue-500">
-																<div className="px-6 w-1/4 py-4  text-blue-400  whitespace-nowrap text-sm font-medium ">
-																	{e._id}
-																</div>
-																<div className="text-sm w-1/4    font-light px-6 py-4 whitespace-nowrap">
-																	{e.product}
-																</div>
-																<div className="text-sm w-1/4    font-light px-6 py-4 whitespace-nowrap">
-																	{e.quantity}
-																</div>
-																<div className="text-sm w-1/4    font-light px-6 py-4 whitespace-nowrap">
-																	{e.status}
-																</div>
-																<div className="text-sm w-1/4    font-light px-6 py-4 whitespace-nowrap">
-																	<CurrencyRupeeIcon sx={{ width: "20px" }} />
-																	{e.bids.map((data, key) => {
-																		return (
-																			<div className="flex">
-																				<p>  {sellerid === data.seller ? e.buyer_Price : ''} </p>
-																			</div>
-																		)
-																	})}
-																</div>
+												{
+													data.filter((abc) => abc.order_status === 'preparing').map((e, key) => {
+														return e.winner.map((data, key) => {
+															return sellerid === data.seller ? (
+																<div key={e._id} className="flex my-1 border rounded-md hover:border-blue-500">
+																	<div className="px-6 w-1/4 py-4  text-blue-400  whitespace-nowrap text-sm font-medium ">
+																		{e._id}
+																	</div>
+																	<div className="text-sm w-1/4    font-light px-6 py-4 whitespace-nowrap">
+																		{e.product}
+																	</div>
+																	<div className="text-sm w-1/4    font-light px-6 py-4 whitespace-nowrap">
+																		{e.quantity}
+																	</div>
+																	{/* <div className="text-sm w-1/4    font-light px-6 py-4 whitespace-nowrap">
+																		{e.order_status}
+																	</div> */}
+																	<div className="text-sm w-1/4 flex  font-light px-6 py-4 whitespace-nowrap">
+																		<p className="w-fit mr-1">Rs. </p>
+																		{e.bids.map((data, key) => {
+																			return (
+																				<span className="flex w-fit">
+																					<p>  {sellerid === data.seller ? e.buyer_Price : ''} </p>
+																				</span>
+																			)
+																		})}
+																	</div>
 
-																{/* <div className="text-sm w-1/6   font-light px-6 py-4 whitespace-nowrap">
-															Rs. {elem.buyer_Price}
-														</div> */}
-																<div className="text-sm w-1/6 font-light  whitespace-nowrap m-auto flex justify-center">
-																	<button className="bg-[#004E97] hover:bg-[#187bd7] text-white p-2 rounded-md">View Order</button>
+																	<div className="text-sm w-1/6 font-light  whitespace-nowrap m-auto flex justify-center">
+																		<button className="bg-[#004E97] hover:bg-[#187bd7] text-white p-2 rounded-md">View Order</button>
+																	</div>
 																</div>
-															</div>
-														) : ('')
+															) : ""
+														})
 													})
-												})
-											}
-										</div>
-										:
-										< ExploreEnquiry />
-									:
-									bids.filter(bid => (bid.order_status === 'delivered' || bid.order_status === 'inTransit')).length > 0 ?
-										<div>
-											<div className="flex">
-												<div className="text-sm px-6  w-1/4 font-medium text-gray-900 py-4">
-													Rfq No
-												</div>
-												<div className="text-sm px-6  w-1/4 font-medium text-gray-900 py-4">
-													Product Name
-												</div>
-												<div className="text-sm px-6  w-1/6 font-medium text-gray-900 py-4">
-													Quantity
-												</div>
-												<div className="text-sm px-6 w-1/6  font-medium text-gray-900 py-4">
-													Status
-												</div>
-												<div className="text-sm px-6 w-1/6  font-medium text-gray-900 py-4">
-													Price
-												</div>
-												<div className="text-sm  w-1/6 font-medium text-gray-900 py-4">
-												</div>
+												}
 											</div>
-											{
-												data.filter((bid) => bid.order_status !== 'preparing').map((e, key) => {
-													return e.winner.map((data, key) => {
-														return sellerid === data.seller ? (
-															<div key={e._id} className="flex my-1 border rounded-md hover:border-blue-500">
-																<div className="px-6 w-1/4 py-4  text-blue-400  whitespace-nowrap text-sm font-medium ">
-																	{e._id}
-																</div>
-																<div className="text-sm w-1/4    font-light px-6 py-4 whitespace-nowrap">
-																	{e.product}
-																</div>
-																<div className="text-sm w-1/4    font-light px-6 py-4 whitespace-nowrap">
-																	{e.quantity}
-																</div>
-																<div className="text-sm w-1/4    font-light px-6 py-4 whitespace-nowrap">
-																	{e.status}
-																</div>
-																<div className="text-sm w-1/4    font-light px-6 py-4 whitespace-nowrap">
-																	<CurrencyRupeeIcon sx={{ width: "20px" }} />
-																	{e.bids.map((data, key) => {
-																		return (
-																			<div className="flex">
-																				<p>  {sellerid === data.seller ? e.buyer_Price : ''} </p>
-																			</div>
-																		)
-																	})}
-																</div>
+											:
+											< ExploreEnquiry />
 
-																{/* <div className="text-sm w-1/6   font-light px-6 py-4 whitespace-nowrap">
-															Rs. {elem.buyer_Price}
-														</div> */}
-																<div className="text-sm w-1/6 font-light  whitespace-nowrap m-auto flex justify-center">
-																	<button className="bg-[#004E97] hover:bg-[#187bd7] text-white p-2 rounded-md">View Order</button>
+									}
+								</div>
+							}
+							{
+								status === 'delivered' &&
+								<div>
+									{
+										data.filter(bid => (bid.order_status === 'delivered' || bid.order_status === 'inTransit')).length > 0 ?
+											<div>
+												<div className="flex">
+													<div className="text-sm px-6  w-1/4 font-medium text-gray-900 py-4">
+														Rfq No
+													</div>
+													<div className="text-sm px-6  w-1/4 font-medium text-gray-900 py-4">
+														Product Name
+													</div>
+													<div className="text-sm px-6  w-1/6 font-medium text-gray-900 py-4">
+														Quantity
+													</div>
+													{/* <div className="text-sm px-6 w-1/6  font-medium text-gray-900 py-4">
+														Status
+													</div> */}
+													<div className="text-sm px-6 w-1/6  font-medium text-gray-900 py-4">
+														Price
+													</div>
+													<div className="text-sm  w-1/6 font-medium text-gray-900 py-4">
+													</div>
+												</div>
+												{
+													data.filter((bid) => bid.order_status === 'inTransit').map((e, key) => {
+														return e.winner.map((data, key) => {
+															return sellerid === data.seller ? (
+																<div key={e._id} className="flex my-1 border rounded-md hover:border-blue-500">
+																	<div className="px-6 w-1/4 py-4  text-blue-400  whitespace-nowrap text-sm font-medium ">
+																		{e._id}
+																	</div>
+																	<div className="text-sm w-1/4    font-light px-6 py-4 whitespace-nowrap">
+																		{e.product}
+																	</div>
+																	<div className="text-sm w-1/4    font-light px-6 py-4 whitespace-nowrap">
+																		{e.quantity}
+																	</div>
+																	{/* <div className="text-sm w-1/4    font-light px-6 py-4 whitespace-nowrap">
+																		{e.order_status}
+																	</div> */}
+																	<div className="text-sm w-1/4 flex font-light px-6 py-4 whitespace-nowrap">
+																		<p className="w-fit mr-1">Rs. </p>
+																		{e.bids.map((data, key) => {
+																			return (
+																				<div className="flex">
+																					<p>  {sellerid === data.seller ? e.buyer_Price : ''} </p>
+																				</div>
+																			)
+																		})}
+																	</div>
+
+
+																	<div className="text-sm w-1/6 font-light  whitespace-nowrap m-auto flex justify-center">
+																		<button className="bg-[#004E97] hover:bg-[#187bd7] text-white p-2 rounded-md">View Order</button>
+																	</div>
 																</div>
-															</div>
-														) : ('')
+															) : ('')
+														})
 													})
-												})
-											}
-										</div>
-										:
-										< ExploreEnquiry />
+												}
+												{
+													data.filter((bid) => bid.order_status === 'delivered').map((e, key) => {
+														return e.winner.map((data, key) => {
+															return sellerid === data.seller ? (
+																<div key={e._id} className="flex my-1 border rounded-md hover:border-blue-500">
+																	<div className="px-6 w-1/4 py-4  text-blue-400  whitespace-nowrap text-sm font-medium ">
+																		{e._id}
+																	</div>
+																	<div className="text-sm w-1/4    font-light px-6 py-4 whitespace-nowrap">
+																		{e.product}
+																	</div>
+																	<div className="text-sm w-1/4    font-light px-6 py-4 whitespace-nowrap">
+																		{e.quantity}
+																	</div>
+																	{/* <div className="text-sm w-1/4    font-light px-6 py-4 whitespace-nowrap">
+																		{e.order_status}
+																	</div> */}
+																	<div className="text-sm w-1/4 flex font-light px-6 py-4 whitespace-nowrap">
+																		<p className="w-fit mr-1">Rs. </p>
+																		{e.bids.map((data, key) => {
+																			return (
+																				<div className="flex">
+																					<p>  {sellerid === data.seller ? e.buyer_Price : ''} </p>
+																				</div>
+																			)
+																		})}
+																	</div>
+
+																	<div className="text-sm w-1/6 font-light  whitespace-nowrap m-auto flex justify-center">
+																		<button className="bg-[#004E97] hover:bg-[#187bd7] text-white p-2 rounded-md">View Order</button>
+																	</div>
+																</div>
+															) : ('')
+														})
+													})
+												}
+
+											</div>
+											:
+											< ExploreEnquiry />
+									}
+								</div>
 							}
 						</div>
 					</div>

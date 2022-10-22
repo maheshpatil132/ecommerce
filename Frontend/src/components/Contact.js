@@ -21,7 +21,7 @@ function Contact({ setShowModal, user, setVal }) {
 									<div className="mt-3 rounded-md box_shadow bg-white p-3 border">
 										<div className="flex justify-between">
 											<h1>Contacts</h1>
-											<button onClick={() => { setShowModal('contact'); setVal(e._id) }} className='text-white bg-[#004AA1] px-2 py-1 rounded-md '><BorderColorIcon className='mb-1' fontSize='small' /><span className='mx-2'>Edit</span></button>
+											<button onClick={() => { setShowModal('upcontact'); setVal(e._id) }} className='text-white bg-[#004AA1] px-2 py-1 rounded-md '><BorderColorIcon className='mb-1' fontSize='small' /><span className='mx-2'>Edit</span></button>
 										</div>
 
 										<div className="flex w-11/12 mt-3 p-1">

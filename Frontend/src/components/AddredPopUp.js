@@ -10,6 +10,8 @@ function AddredPopUp({ setShowModal, user, setUser }) {
     const [mobile, setMobile] = useState(user.mobile ? user.mobile : "")
     const [address, setAddress] = useState(user.address ? user.address : "")
     const [profile, setProfile] = useState(user.profileAddress)
+    console.log(profile)
+
     const newp = {
         adtype: type,
         name: name,

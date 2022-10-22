@@ -26,7 +26,13 @@ exports.getbuyers = catchaysnc(async (req, res, next) => {
 exports.getsinglebuyer = catchaysnc(async (req, res, next) => {
   const id = req.params.id
 
-  const buyer = await db.findById(id)
+  const buyer = await db.findById(id).populate("bids").populate([
+    {
+      path: 'bids',
+      populate: [{ path: 'product' }],
+
+    }
+  ])
 
   if (!buyer) {
     return next("user not found", 404)
