@@ -101,7 +101,7 @@ const Enquires = () => {
 							<div className="grid grid-cols-3 gap-6">
 								{data.map((e, key) => {
 									return e.bids.map((data, key) => {
-										return ((sellerid === data.seller && data.price !== null && e.quote_status !== 'active' && status === 'pending')) ? (
+										return ((sellerid === data.seller && data.price !== null && e.quote_status === 'active' && status === 'pending') || (sellerid === data.seller && e.quote_status === 'ended' && status === 'pending')) ? (
 											<SellerBidBox e={e} sellerid={sellerid} />
 										) : (
 											''

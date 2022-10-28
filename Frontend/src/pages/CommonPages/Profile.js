@@ -23,6 +23,8 @@ import Payment from '../../components/Buyer/Payment/Payment';
 import AdminBidding from '../Buyer/AdminBidding';
 import AdminOrderHistory from '../Buyer/AdminOrderHistory';
 import AdminTrackShipment from '../Buyer/AdminTrackShpiment';
+import AdminEnquiry from '../Seller/AdminEnquiry';
+import AdminOrder from '../Seller/AdminOrder';
 
 
 const Profile = () => {
