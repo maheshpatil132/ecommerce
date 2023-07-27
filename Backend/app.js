@@ -20,7 +20,7 @@ const server = http.createServer(app)
 
 
 app.use(cors({
-  credentials: true, origin: ['http://localhost:3000', 'https://maqure.org', 'https://www.maqure.org', 'https://www.maqure.in' , 'https://maqure.in', 'http://127.0.0.1:5500'], allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token' , ],
+  credentials: true, origin: ['https://ecommerce-ui-blond.vercel.app/'], allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token' , ],
 }))
 app.use(cookieParser())
 app.use(body.urlencoded({ extended: false }))
