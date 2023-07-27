@@ -36,7 +36,6 @@ function AllProducts({ id, user1 }) {
     return (
         <>
             <div className="flex align-middle p-4 h-screen overflow-y-scroll bg-white flex-1">
-                <OnBoardHeader />
                 <div className="flex flex-col w-full">
                     <div className="flex justify-between mt-4">
                         <p className='font-semibold text-2xl mb-2'>Product Catalouge</p>

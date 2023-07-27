@@ -5,8 +5,10 @@ import { loginbuyeraction, loginselleraction, loginadminaction } from '../../../
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLocation, useNavigate } from 'react-router-dom'
+import login from '../../../images/login.png'
+import CloseIcon from '@mui/icons-material/Close';
 
-const Login = () => {
+const Login = ({setOpen , setCreateOpen}) => {
 
     // state variables
     const [email, setEmail] = useState('')
@@ -32,24 +34,27 @@ const Login = () => {
         e.preventDefault()
         if (byer) {
             if (email === "admin@maqure.com") {
-                dispatch(loginadminaction(email, password)).then(()=>{
+                dispatch(loginadminaction(email, password , setOpen)).then(() => {
                     navigate('/dashboard')
-                }).catch((error)=>{
+                }).catch((error) => {
+                    setOpen(true)
                     console.log(error);
                 })
             } else {
-                dispatch(loginbuyeraction(email, password)).then(()=>{
+                dispatch(loginbuyeraction(email, password ,setOpen)).then(() => {
                     navigate('/dashboard')
-                }).catch((error)=>{
+                }).catch((error) => {
+                    setOpen(true)
+
                     console.log(error);
                 })
 
             }
         }
         else {
-            dispatch(loginselleraction(email, password)).then(()=>{
+            dispatch(loginselleraction(email, password , setOpen)).then(() => {
                 navigate('/dashboard')
-            }).catch((error)=>{
+            }).catch((error) => {
                 console.log(error);
             })
         }
@@ -65,20 +70,27 @@ const Login = () => {
         e.preventDefault();
         setByer(true)
     }
-  
+
 
     return (
-        <div className='p-3 fixed left-1/2 flex flex-col  -translate-x-1/2 top-1/2 -translate-y-1/2 rounded-md bg-white w-96 border'>
+        <div className=' flex bg-white p-6 px-10 items-center justify-between gap-6 relative text-black'>
 
-            <form action="" className=' p-3'>
-                <div className="heading">
-                    <h1 className=' text-heading my-1 text-code-text-heading font-semibold'>Welcome back!</h1>
-                    <p className=' text-base text-code-text-color'>Login below or <span> <a href="/" className=' text-code-primary underline'>Create an Account</a></span></p>
-                </div>
+           <div className=' text-center p-3'>
+             <h1 className=' text-[#04395E] font-semibold text-3xl'>Welcome back!</h1>
+             <p className=' text-[#637D94] text-base'>Login below or <span className=' cursor-pointer' onClick={()=>{ setCreateOpen(true); setOpen(false) }}> Create an Account</span>  </p>
+             <img src={login} alt="" />
+           </div>
+
+    
+    <CloseIcon onClick={()=>setOpen(false)} className=' cursor-pointer absolute right-5 top-5'/>
+
+         
+           <form action="" className=' p-3 w-[360px]'>
+                
                 <div>
                     <div className="buttons flex gap-4 my-4 mb-8">
-                        <button onClick={select_byer} className={`flex-1    p-3 capitalize ${byer ? 'border-code-primary border-b-2 font-bold text-code-text-heading' : 'border-gray-300 border-b text-code-text-color'}`}>as a buyer</button>
-                        <button onClick={select_seller} className={`p-3 capitalize  flex-1  ${!byer ? 'border-code-primary border-b-2 font-bold text-code-text-heading' : 'border-gray-300 border-b text-code-text-color'}`} >as a seller</button>
+                        <button onClick={select_byer} className={`flex-1    p-3 capitalize ${byer ? 'border-code-primary border-b-2 font-bold text-[#004AA1]' : 'border-gray-300 border-b text-code-text-color'}`}>as a buyer</button>
+                        <button onClick={select_seller} className={`p-3 capitalize  flex-1  ${!byer ? 'border-code-primary border-b-2 font-bold text-[#004AA1]' : 'border-gray-300 border-b text-code-text-color'}`} >as a seller</button>
                     </div>
                 </div>
                 <div className="input_cover my-5 space-y-2">
@@ -96,7 +108,7 @@ const Login = () => {
                 <span className=' font-bold text-[#004E97] block text-center'><a href="/" className='underline'>Forgot Password</a></span>
             </form>
 
-
+          
 
         </div>
     )

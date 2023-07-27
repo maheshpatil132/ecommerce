@@ -35,12 +35,38 @@ export default function Rfq(change) {
     }
 
     const Acceptorder = async (e) => {
+        setLoad(true)
         await Axios.put(`/admin/accept/${id}`, {
             id: id,
             seller: e.target.getAttribute('seller'),
             price: e.target.getAttribute('price'),
 
         }).then((res) => {
+            console.log(res)
+            setBid(res.data.order)
+            setLoad(false)
+            setWinner(res.data.order.winner[0].seller)
+        }).catch((err) => console.log(err.responce.message))
+    }
+
+
+    const Rejectorder = async (e) => {
+        let val = window.prompt('Enter the Price')
+        if(!val){
+            val = 'No Reason'
+        }
+        setLoad(true)
+        console.log(e.target.getAttribute('seller'))
+        await Axios.put(`/admin/reject/${id}`, {
+            id: id,
+            seller: e.target.getAttribute('seller'),
+            price: e.target.getAttribute('price'),
+            message:val
+
+        }).then((res) => {
+            console.log(res)
+            setBid(res.data.order)
+            setLoad(false)
         }).catch((err) => console.log(err.responce.message))
     }
 
@@ -49,6 +75,7 @@ export default function Rfq(change) {
         const getdata = async () => {
             if (id) {
                 await Axios.get(`/order/${id}`).then((res) => {
+                    console.log(res.data)
                     setBid(res.data.order)
                     setLoad(false)
                     setWinner(res.data.order.winner[0].seller)
@@ -67,9 +94,9 @@ export default function Rfq(change) {
 
             <div className="flex flex-1 h-screen overflow-scroll p-4 px-6">
                 {bid ?
-                    <div className="flex flex-col w-2/3">
+                    <div className="flex mt-24 flex-col w-2/3">
                         <p className="text-[#1672DE]">#{bid._id}</p>
-                        <p className="mt-4 font-semibold text-2xl">{bid.product.name}</p>
+                        <p className="mt-4 font-semibold text-xl">{bid.product.name}</p>
                         <div className="flex mt-4">
                             <div className="w-1/5 mr-2 flex flex-col">
                                 <p className="text-[#637F94] font-semibold">Quantity</p>
@@ -133,7 +160,7 @@ export default function Rfq(change) {
                                             <button onClick={Acceptorder} seller={elem.seller._id} price={elem.price} className={` w-fit py-1 px-2 mt-2 rounded-md text-white ${winner === elem.seller._id ? 'bg-green-600' : 'bg-[#1672DE]'}`}>Accept</button>
                                         </div>
                                         <div className="w-1/6">
-                                            <button className="border border-red-600 w-fit py-1 px-2 mt-2 rounded-md text-red-600">Reject</button>
+                                            <button onClick={Rejectorder} seller={elem.seller._id} price={elem.price} className="border border-red-600 w-fit py-1 px-2 mt-2 rounded-md text-red-600">Reject</button>
                                         </div>
                                         <p>Edit</p>
                                     </div>

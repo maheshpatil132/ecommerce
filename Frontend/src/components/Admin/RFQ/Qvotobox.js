@@ -106,7 +106,7 @@ export default function Qvotobox({ elem, id ,setStatus }) {
 								<div className="flex bg-white w-[650px] p-4">
 									<div className="flex flex-col w-full">
 										<p className="text-[#1672DE]">#1672DE</p>
-										<p className="mt-1 font-semibold text-2xl">{elem.product.name}</p>
+										<p className="mt-1 font-semibold text-xl">{elem.product ? elem.product.name.slice(0, 17)+'...' : 'null' }</p>
 										<div className="flex mt-4">
 											<div className="w-1/5 mr-2 flex flex-col">
 												<p className="text-[#637F94] font-semibold">Quantity</p>
@@ -214,13 +214,13 @@ export default function Qvotobox({ elem, id ,setStatus }) {
 			<div className="right bg-white shadow-xl px-3  rounded-md py-4">
 				<div className="flex flex-col gap-2">
 					<p className="text-[#1672DE] text-[14px] font-[400px]">#RFQ{val + '' + month + '' +year }</p>
-					<h2 className=" text-[24px] font-[600]">{elem.product ? elem.product.name : 'null'}</h2>
+					<h2 className=" text-[20px] font-[600]">{elem.product ? elem.product.name.slice(0, 17)+'...' : 'null' }</h2>
 				</div>
 				<div className="flex gap-4 mt-3">
-					<button onClick={process} className="bg-[#1672DE] rounded-md text-[#FFFFFF] font-[700] text-[16px] px-5 py-2 border-2 ">
+					<button onClick={process} className="bg-[#004aa2] rounded-md text-[#FFFFFF] font-[700] text-[16px] px-5 py-2 border-2 ">
 						Process
 					</button>
-					<button onClick={Reject} className="bg-[#FFFFFF] rounded-md text-[#637F94] text-[16px] font-[700] px-5 py-2 border-2">
+					<button onClick={Reject} className="bg-[#FFFFFF]  rounded-md text-[#637F94] text-[16px] font-[700] px-5 py-2 border-2 border-red-200">
 						Reject
 					</button>
 				</div>

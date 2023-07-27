@@ -122,7 +122,7 @@ exports.addproduct = catchaysnc(async (req, res, next) => {
         product: addreq.products
       }
     }
-  }).populate('AddprodReq.seller').populate('AddprodReq.product')
+  }, { new: true }).populate('AddprodReq.seller').populate('AddprodReq.product')
 
   if (!requests) {
     return next(new Errorhandler(404, "something went wrong"))
@@ -137,6 +137,42 @@ exports.addproduct = catchaysnc(async (req, res, next) => {
     requests
   })
 })
+
+
+
+
+// reject product req
+exports.rejectaddproduct = catchaysnc(async (req, res, next) => {
+
+  const addreq = req.body
+
+  
+  const requests = await db.findOneAndUpdate({ email: process.env.Admin_email }, {
+    $pull: {
+      AddprodReq: {
+        seller: addreq.sellers,
+        product: addreq.products
+      }
+    }
+  }, { new: true }).populate('AddprodReq.seller').populate('AddprodReq.product')
+
+  if (!requests) {
+    return next(new Errorhandler(404, "something went wrong"))
+  }
+
+  await requests.save()
+
+
+  res.status(200).json({
+    sucess: true,
+    message: "product rejected sucessfully",
+    requests
+  })
+})
+
+
+
+
 
 
 
@@ -164,6 +200,21 @@ exports.getalladdprodrequest = catchaysnc(async (req, res, next) => {
   res.status(200).json({
     sucess: true,
     addrequs
+  })
+})
+
+
+
+// get all new prod request
+exports.getallnewprodrequest = catchaysnc(async (req, res, next) => {
+  const email = process.env.Admin_email
+  const NewProd = await db.findOne({ email: email }, { NewprodReq: 1 }).populate('NewprodReq.seller')
+  if (!NewProd) {
+    return next(new Errorhandler('Internal Issue!', 500))
+  }
+  res.status(200).json({
+    sucess: true,
+    NewProd
   })
 })
 

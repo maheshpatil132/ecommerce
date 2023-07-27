@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
-
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import updown from "./rfqimg/updown.png";
-
 import Qvotobox from './Qvotobox';
 import SearchBox from '../../SearchBox';
 import Header from '../../Header';

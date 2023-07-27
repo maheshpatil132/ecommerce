@@ -90,7 +90,7 @@ export default function RfqHistory() {
                               #{elem._id}
                             </td>
                             <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
-                              {elem.product ? elem.product.name : 'null' }
+                              {elem.product ? elem.product.name.slice(0, 17)+'...' : 'null' }
                             </td>
                             <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
                               {elem.quantity}

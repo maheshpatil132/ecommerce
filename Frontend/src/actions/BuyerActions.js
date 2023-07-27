@@ -4,7 +4,7 @@ import { Axios } from '../components/Axios'
 
 
 
-export const loginbuyeraction = (email , password) => async(dispatch)=>{
+export const loginbuyeraction = (email , password , setOpen) => async(dispatch)=>{
    try {
     dispatch({type: 'UserReq' })
     const {data} = await Axios.post('/login/buyer',{email ,password } ,{withCredentials:true})
@@ -14,7 +14,8 @@ export const loginbuyeraction = (email , password) => async(dispatch)=>{
         type:'LoginSuccess',
         payload : data.user
     })
-
+  
+    setOpen(false)
   
   
     toast.success('Login Success')
@@ -24,13 +25,13 @@ export const loginbuyeraction = (email , password) => async(dispatch)=>{
         type:'LoginFail',
         payload:error.response.data.error
       })
-   
+      
       toast.error(error.response.data.error)
 
    }
 }
 
-export const loginadminaction = (email , password) => async(dispatch)=>{
+export const loginadminaction = (email , password ,setOpen) => async(dispatch)=>{
 
    try {
     
@@ -47,6 +48,10 @@ export const loginadminaction = (email , password) => async(dispatch)=>{
         payload : data.user
     })
 
+    setOpen(false)
+
+
+    toast.success('Login Success')
 
    } catch (error) {
       dispatch({
@@ -60,7 +65,7 @@ export const loginadminaction = (email , password) => async(dispatch)=>{
    }
 }
 
-export const loginselleraction = (email , password) => async(dispatch)=>{
+export const loginselleraction = (email , password ,setOpen) => async(dispatch)=>{
 
 
    try {
@@ -76,6 +81,9 @@ export const loginselleraction = (email , password) => async(dispatch)=>{
         payload : data.user
     })
 
+    setOpen(false)
+  
+    toast.success('Login Success')
 
 
    } catch (error) {
@@ -110,6 +118,8 @@ export const autologin = () => async(dispatch)=>{
         type:'LoginFail',
         payload:error.response.data.error
       })
+
+
 
    }
 }

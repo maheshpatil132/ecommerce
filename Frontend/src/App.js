@@ -18,7 +18,7 @@ import Track from "./pages/Buyer/Track";
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getallproduct } from "./actions/ProductActions";
 import Activerfq from "./components/Admin/RFQ/Activerfq.js";
 import AccepetedRfq from "./components/Admin/RFQ/AccepetedRfq.js"
@@ -42,14 +42,23 @@ import ProdReq from "./pages/Admin/ProdReq";
 import SellerReq from "./pages/Admin/SellerReq";
 import Payment from "./components/Buyer/Payment/Payment";
 import BuyerOrderPage from "./pages/CommonPages/BuyerOrderPage";
+import { Backdrop, CircularProgress } from "@mui/material";
+import Header from "./components/Header";
+import OnBoardHeader from "./components/OnBoardHeader";
 
 
 function App() {
 
-
-
 	const { user, isAuthenticated } = useSelector(state => state.user)
 	const dispatch = useDispatch()
+	const [open, setOpen] = useState(false);
+	const [createopen, setCreateOpen] = useState(false);
+	const handleClose = () => {
+		setOpen(false);
+	};
+	const handleToggle = () => {
+		setOpen(!open);
+	};
 
 	const Nav = () =>
 		useRoutes([
@@ -91,11 +100,6 @@ function App() {
 		dispatch(getallproduct)
 		dispatch(autologin())
 
-		// if(!isAuthenticated){
-		//    navigate('/login')
-		// }
-
-		console.log(user)
 	}, [dispatch])
 
 	return (
@@ -119,13 +123,23 @@ function App() {
 			/>
 
 
-			<Routes>
 
-				<Route path="/login" element={
-					<Login />
-				}></Route>
+			<Backdrop
+				sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+				open={open}
 
-			</Routes>
+			>
+				<Login setOpen={setOpen} setCreateOpen={setCreateOpen} />
+			</Backdrop>
+
+			<Backdrop
+				sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+				open={createopen}
+
+			>
+				<Create setOpen={setOpen} setCreateOpen={setCreateOpen} />
+			</Backdrop>
+			<OnBoardHeader setOpen={setOpen} setCreateOpen={setCreateOpen} />
 
 			<Routes>
 
@@ -179,7 +193,6 @@ function App() {
 				}></Route>
 				<Route path="/payment" element={<Payment />}></Route>
 				<Route path="/component" element={<ComponentPage />}></Route>
-				<Route path="/create" element={<Create />}></Route>
 				<Route path="/:role/profile/:id" element={<Profile />}></Route>
 				<Route path="/" element={<LandingPage />}></Route>
 				<Route path="/products" element={<AllProducts />}></Route>

@@ -61,7 +61,7 @@ function ProdDecr() {
 						<div className="flex mt-6">
 							<div className="py-3 px-4 prod_bag rounded w-1/4">
 								<p className="font-xs">Synonyms </p>
-								<h3 className="font-xl">{product && product.Synonyms ? product.Synonyms : "-"}</h3>
+								<h3 className="font-xl">{product && product.Synonyms ? product.Synonyms.length > 30 ? product.Synonyms.slice(0,30)+'...' :  product.Synonyms : "-"}</h3>
 							</div>
 							<div className="py-3 mx-6 px-4 h-fit rounded prod_bag w-1/10">
 								<p className="font-xs">Color</p>

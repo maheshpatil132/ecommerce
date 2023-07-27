@@ -62,50 +62,41 @@ const AdminModel = mongoose.Schema({
 
   ],
   NewprodReq:[{
-    seller:[{
+    seller:{
       type: mongoose.SchemaTypes.ObjectId,
-      ref:'seller'
-    }],
+      ref:'seller',
+      required:true
+    },
 
     productName:{
       type:String,
-      required:true
     },
     Substance:{
       type:String,
-      required:true
     },
     CASNumber:{
       type:String,
-      required:true
     },
    ECNumber:{
       type:String,
-      required:true
     },
     MinPurity:{
       type:String,
-      required:true
     },
     Color:{
       type:String,
-      required:true
     },
     Apperance:{
       type:String,
-      required:true
     },
     Category:{
       type:String,
-      required:true
     },
     Proddecr:{
       type:String,
-      required:true
     },
-    ProductSynonyms:{
+    Synonyms:{
       type:String,
-      required:true
     }
 
   }]

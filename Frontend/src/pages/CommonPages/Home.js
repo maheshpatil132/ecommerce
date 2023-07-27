@@ -6,7 +6,6 @@ const Home = () => {
   const {user , isAuthenticated} = useSelector(state => state.user)
   return (
     <div className=' flex-1'>
-        <Header/>
         <div className="main flex">
           {
             user.role !== 'admin' &&

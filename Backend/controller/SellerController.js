@@ -234,3 +234,27 @@ exports.getallsellerquote = catchaysnc(async (req, res, next) => {
     sellerid,
   })
 })
+
+
+
+// request new product to admin =)
+exports.newproduct = catchaysnc(async(req,res,next)=>{
+  
+  const admin = await AdminModel.findOneAndUpdate({email : process.env.Admin_email} , {
+    $push:{
+      NewprodReq : {...req.body , seller: req.user.id}
+    }
+  })
+
+  if(!admin){
+    return next( new Errorhandler('internal Issue', 500))
+  }
+  
+  await admin.save()
+
+  res.status(200).json({
+    success:true,
+    message: "Your New Product Request Submitted Successfully "
+  })
+
+})

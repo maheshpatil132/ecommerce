@@ -24,6 +24,7 @@ const SellerBidBox = ({ e }) => {
    
   }
 
+  console.log(e)
   return (
     <div className=" bg-white border p-4 flex flex-col  gap-4 text-sm ">
       {

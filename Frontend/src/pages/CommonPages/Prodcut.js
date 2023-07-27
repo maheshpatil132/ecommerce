@@ -7,7 +7,6 @@ import Header from '../../components/Header'
 const Prodcut = () => {
   return (
     <div className='flex'>
-       <Header/>
        <div className=' product flex-1 h-screen overflow-y-scroll '>
          <ProdDecr/>
        </div>

@@ -134,7 +134,7 @@ useEffect(() => {
                               {/* {elem.buyer} */}xyz
                             </td>
                             <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
-                              {elem.product && elem.product.name ? elem.product.name :'-' }
+                              {elem.product && elem.product.name ? elem.product.name.slice(0, 17)+'...' :'-' }
                             </td>
                             <td className="text-sm   font-light px-6 py-4 whitespace-nowrap  ">
                               {elem.order_status}

@@ -50,7 +50,6 @@ const Enquires = () => {
 
 	return (
 		<div className=" flex-1">
-			<Header />
 
 			<div className="flex">
 				<div

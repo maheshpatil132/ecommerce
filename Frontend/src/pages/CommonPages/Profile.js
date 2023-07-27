@@ -69,7 +69,6 @@ const Profile = () => {
 
 	return (
 		<div className='flex-1 space-y-3 mt-20'>
-			<Header />
 
 			<div className="flex flex-col overflow-y-scroll h-[88vh] gap-3">
 				<div className="bg-white w-[95%] mx-auto relative z-45 px-4 box_shadow rounded-md">

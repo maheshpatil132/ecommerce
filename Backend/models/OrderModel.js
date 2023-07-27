@@ -42,6 +42,10 @@ const OrderModel = mongoose.Schema({
          type: Number,
          default:null
       },
+      message:{
+         type:String,
+         default:null
+      }
    }
    ],
    quote_documents: [

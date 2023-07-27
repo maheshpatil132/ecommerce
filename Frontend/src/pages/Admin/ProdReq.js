@@ -13,6 +13,7 @@ import OnBoardHeader from '../../components/OnBoardHeader';
 const ProdReq = () => {
 
   const [requests, setRequests] = useState([])
+  const [Newrequests, setNewRequests] = useState([])
   // const [load, setLoad] = useState(true)
   const [status, setStatus] = useState('Already')
 
@@ -30,14 +31,29 @@ const ProdReq = () => {
       products:elem.product._id,
       sellers:elem.seller._id
     }).then((res)=>{
-     
+      console.log(res.data.requests)
       toast.success(res.data.message)
-      setRequests(res.data.requests)
+      setRequests(res.data.requests.AddprodReq)
     }).catch((error)=>{
     toast.error(error.response.data.error)
 
     })
   }
+
+  const rejectprod = async(elem)=>{
+    await Axios.put('/reject/addprod',{
+      products:elem.product._id,
+      sellers:elem.seller._id
+    }).then((res)=>{
+      toast.success(res.data.message)
+      setRequests(res.data.requests.AddprodReq)
+    }).catch((error)=>{
+    toast.error(error.response.data.error)
+
+    })
+  }
+
+
 
 
   const getdata = async () => {
@@ -55,10 +71,27 @@ const ProdReq = () => {
 
   }
 
+
+  const getNewReq = async () => {
+
+    try {
+
+      await Axios.get('/getall/new/product/request').then((res) => {
+        setNewRequests(res.data.NewProd.NewprodReq)
+        console.log(res.data);
+      })
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+  
+
   useEffect(() => {
 
 
-    
+    getNewReq()
 
     getdata()
   }, [status])
@@ -68,10 +101,10 @@ const ProdReq = () => {
       <OnBoardHeader/>
       <h1 className=' text-2xl mt-16 font-medium'> Add Product Request</h1>
       <div className="box_cont flex gap-5 mt-7">
-        <div className={` text-sm box_shadow border flex flex-col gap-2  box_shadow rounded-lg py-3 cursor-pointer w-44 px-3 ${status === 'Already' && 'bg-buyer-primary text-white'} `} onClick={status_proccess}>
+        <div className={` bg-white text-sm box_shadow border flex flex-col gap-2  box_shadow rounded-lg py-3 cursor-pointer w-44 px-3 ${status === 'Already' && 'bg-buyer-primary text-white'} `} onClick={status_proccess}>
           Already Prodreq
         </div>
-        <div className={` text-sm box_shadow border flex flex-col gap-2  box_shadow rounded-lg py-3 cursor-pointer w-44 px-3 ${status === 'New' && 'bg-buyer-primary text-white'} `} onClick={status_active}>
+        <div className={` bg-white text-sm box_shadow border flex flex-col gap-2  box_shadow rounded-lg py-3 cursor-pointer w-44 px-3 ${status === 'New' && 'bg-buyer-primary text-white'} `} onClick={status_active}>
           New Product Request
         </div>
 
@@ -80,7 +113,7 @@ const ProdReq = () => {
       {
 
 
-        status === 'Already' ?
+        status === 'Already' &&
           <>
           <div className=' grid grid-cols-4 gap-4'>
           {
@@ -119,7 +152,7 @@ const ProdReq = () => {
                       <hr />
   
                       <div className=" flex  justify-between items-center">
-                         <button className='px-5 py-2 rounded-md bg-red-300 hover:bg-[#ff8989]'>Reject</button>
+                         <button onClick={()=>{rejectprod(elem)}} className='px-5 py-2 rounded-md bg-red-300 hover:bg-[#ff8989]'>Reject</button>
                          <button onClick={()=>{ Acceptprod(elem) }} className='px-5 py-2 rounded-md bg-code-primary hover:bg-[#01407a] text-white'>Accept</button>
                       </div>
                     </div>
@@ -135,13 +168,68 @@ const ProdReq = () => {
             }
             </div>
           </>
-          :
-
-          <>
-          jajajaj
-          </>
-
       }
+
+
+{
+
+
+status === 'New' &&
+  <>
+  <div className=' grid grid-cols-4 gap-4'>
+  {
+   Newrequests.length >0 ?
+    Newrequests.map((elem,index)=>{
+      return(
+        
+        <div className=" flex bg-white flex-col  mt-7  ">
+          <div className="flex flex-col  border  gap-4 text-sm">
+            <div className=" relative bg-slate-400">
+              <img className="image w-full h-full" src={company} alt="" />
+              <div className=" absolute bottom-0 w-full p-4 flex flex-col gap-2">
+                <h1 className="  text-white text-xl">ISOFOL 28</h1>
+                <hr className=" bg-white  w-full" />
+              </div>
+            </div>
+
+            <div className="p-3 flex flex-col  gap-4">
+              <div className=" flex flex-col gap-1 ">
+                <p className="  text-[#637F94]">Name</p>
+                <h4 className="">{elem.productName}</h4>
+              </div>
+
+              <div className=" flex flex-col gap-1">
+                <p className="  text-[#637F94]">Chemical Formula </p>
+                <p className=" ">{elem.Substance}</p>
+              </div>
+
+              <div className=" flex flex-col gap-1">
+                <p className="  text-[#637F94]">Seller Name</p>
+                <p className=" ">
+                  {elem.seller.name}
+                </p>
+              </div>
+
+              <hr />
+
+              <div className=" flex  justify-between items-center">
+                 <button className='px-5 py-2 rounded-md bg-red-300 hover:bg-[#ff8989]'>Reject</button>
+                 <button onClick={()=>{ Acceptprod(elem) }} className='px-5 py-2 rounded-md bg-code-primary hover:bg-[#01407a] text-white'>Accept</button>
+              </div>
+            </div>
+          </div>
+        </div>
+     
+      )
+    })
+
+    : 
+
+    <h1 className=' bg-white p-2 text-center my-3 border '>No request yet</h1>
+    }
+    </div>
+  </>
+}
 
     </div>
 

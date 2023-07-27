@@ -4,7 +4,7 @@ import React from 'react'
 import OnBoardHeader from '../../components/OnBoardHeader'
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import SearchBox from '../../components/SearchBox'
 import { FiSearch } from 'react-icons/fi';
@@ -12,6 +12,7 @@ import SearchPopUp from '../../components/SearchPopUp';
 import pics from "../../images/pic.jpeg"
 import ProductReqpopUp from '../../components/ProductReqpopUp';
 import ProdRequestAdded from '../../components/ProdRequestAdded';
+import { getallproduct } from '../../actions/ProductActions';
 
 function AllProducts() {
 
@@ -21,6 +22,7 @@ function AllProducts() {
 
     const { user, isAuthenticated } = useSelector(state => state.user)
     const { product } = useSelector(state => state.product)
+    const dispatch = useDispatch()
 
     const navigate = useNavigate()
 
@@ -30,14 +32,14 @@ function AllProducts() {
 
 
     useEffect(() => {
-        setProducts(product)
+        dispatch(getallproduct)
+        setProducts(...products , product)
     }, [])
 
 
     return (
         <>
             <div className="flex justify-center px-10 align-middle h-screen overflow-y-scroll bg-white flex-1">
-                <OnBoardHeader />
                 <div className="flex flex-col ">
                     <div className="flex w-10/12 justify-between mt-20">
                         <p className='font-semibold text-2xl ml-44'>Product Catalouge</p>
@@ -69,9 +71,6 @@ function AllProducts() {
                             </>
                         ) : null}
 
-                        {!isAuthenticated &&
-                            <button onClick={() => navigate('/login')} className="border border-[#004AA2] text-[#004AA2] px-6 py-1 rounded-md">Login</button>
-                        }
                     </div>
 
                     {/* Seaaarch Box */}

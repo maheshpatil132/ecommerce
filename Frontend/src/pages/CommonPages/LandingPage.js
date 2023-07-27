@@ -81,7 +81,7 @@ export default function LandingPage() {
              }
              
 
-            <OnBoardHeader setShowModal={setShowModal} />
+            {/* <OnBoardHeader setShowModal={setShowModal} /> */}
             <div className="flex mt-24">
                 <div className=" z-10  flex flex-col gap-3 mt-16 relative left-12">
                     <div className="flex flex-col gap-0">

@@ -189,7 +189,7 @@ exports.addminaccepted = catchaysnc(async(req,res,next)=>{
    winner:arr,
    quote_status:'accepted',
    order_status:'preparing'
-  }} , {new:true})
+  }} , {new:true}).populate('product',{name:1,_id:1}).populate('bids.seller',{name:1})
 
   if(!order){
     return next(new Errorhandler('order not exist',404))
@@ -207,3 +207,33 @@ exports.addminaccepted = catchaysnc(async(req,res,next)=>{
 
 
 // reject / delete quoate
+exports.addminrejected = catchaysnc(async(req,res,next)=>{
+    const arr = [{
+      seller:req.body.seller,
+      price:req.body.price
+    }]
+
+    console.log(req.body.seller);
+  
+    // const order = await db.findOneAndUpdate({_id : req.params.id } , {new:true}).populate('product',{name:1,_id:1}).populate('bids.seller',{name:1})
+  
+    const order = await db.findOneAndUpdate({_id:req.params.id ,
+        "bids.seller":req.body.seller
+    }, {
+        $set : {
+            'bids.$.price':null,
+            "bids.$.message":req.body.message
+        }
+    }, {new:true}).populate('product',{name:1,_id:1}).populate('bids.seller',{name:1})
+    // console.log(order)
+    if(!order){
+      return next(new Errorhandler('order not exist',404))
+    }
+    
+    await order.save()
+  
+    res.status(200).json({
+      success:true,
+      order
+    })
+  })

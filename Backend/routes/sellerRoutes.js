@@ -1,5 +1,5 @@
 const express = require('express');
-const { createseller, updateseller, signuprequest, loginseller, deleteseller, addrequest, sellerquote, getsingleseller, getallsellerquote, getsellers } = require('../controller/SellerController');
+const { createseller, updateseller, signuprequest, loginseller, deleteseller, addrequest, sellerquote, getsingleseller, getallsellerquote, getsellers, newproduct } = require('../controller/SellerController');
 const { isAutharization, autherizesrole, isAdmin, isSeller } = require('../middleware/auth');
 const app = express.Router()
 
@@ -18,8 +18,9 @@ const Sellerquote = app.put("/seller/quote/:id", isAutharization,autherizesrole(
 const Getallsellerquote = app.get('/get/enquries',isAutharization ,autherizesrole('seller', 'admin') , getallsellerquote)
 // seller sign up request
 const SignUpSeller = app.put('/request/signup', signuprequest)
+const NewProduct = app.put('/request/new/product', isAutharization , autherizesrole('seller', 'admin') , newproduct) 
 
 
 
 
-module.exports = { CreateSeller, SignUpSeller, LoginSeller, DeleteSeller, AddProdRequest, Sellerquote, Getsingleseller, Getallsellerquote , GetAllseller , SendCreateReq ,UpdateSeller}
+module.exports = { CreateSeller, SignUpSeller, LoginSeller, DeleteSeller, AddProdRequest, Sellerquote, Getsingleseller, Getallsellerquote , GetAllseller , SendCreateReq ,UpdateSeller , NewProduct}

@@ -60,7 +60,6 @@ const submit_form = async(e) =>{
 }
     return (
         <div className=' relative flex-1 flex flex-col overflow-hidden'>
-           <OnBoardHeader/>
             {/* home div */}
 
             <div className=' relative overflow-hidden px-36   h-screen flex flex-col'>
@@ -73,7 +72,7 @@ const submit_form = async(e) =>{
 
                         <p className=' text-sm text-buyer-text-color'>Request a demo to learn how Maqure makes it easier than ever for you to market, sell and transact online.
                         </p>
-                        <form onSubmit={submit_form} className=' z-40 flex flex-col gap-4 w-[21.6rem]'>
+                        <form onSubmit={submit_form} className=' z-30 flex flex-col gap-4 w-[21.6rem]'>
                             <input required onChange={company_handle} value={company} type="text" className=' outline-none border-[#667080] rounded-md py-2 px-4 border' placeholder='Company Name' />
                             <input required  onChange={email_handle} value={email} type="text" className=' border-[#667080] rounded-md py-2 px-4 border outline-none' placeholder='Email ' />
                             <input required onChange={mobile_handle} value={mobile} type="text" className=' border-[#667080] rounded-md py-2 px-4 border outline-none' placeholder='Phone Number' />

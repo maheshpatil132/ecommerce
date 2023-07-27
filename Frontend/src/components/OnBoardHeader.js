@@ -6,7 +6,7 @@ import { Axios } from './Axios'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 
-const OnBoardHeader = ({setShowModal}) => {
+const OnBoardHeader = ({setOpen ,setCreateOpen}) => {
 
     const { isAuthenticated } = useSelector(state => state.user)
 
@@ -34,8 +34,8 @@ const OnBoardHeader = ({setShowModal}) => {
                     <li className="text-lg font-semibold px-2 py-1">About Us</li>
 
                     {!isAuthenticated ? <>
-                        <button onClick={() => { navigate('/create') }} className="bg-[#004AA2] rounded-md text-white text-lg font-semibold px-2 py-1  ml-4">Sign Up</button>
-                        <button className="bg-[#004AA2] rounded-md text-white text-lg font-semibold px-2 py-1  ml-4" onClick={() =>  setShowModal(true) }>Log In</button>
+                        <button onClick={() => {setCreateOpen(true) }} className="bg-[#004AA2] rounded-md text-white text-lg font-semibold px-2 py-1  ml-4">Sign Up</button>
+                        <button className="bg-[#004AA2] rounded-md text-white text-lg font-semibold px-2 py-1  ml-4" onClick={() =>  setOpen(true) }>Log In</button>
                     </>
                         :
                         <div className='flex gap-6 mt-1'>

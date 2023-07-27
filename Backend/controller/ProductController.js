@@ -24,6 +24,7 @@ exports.get8product = catchaysnc(async(req,res,next)=>{
 })
 
 exports.getallproduct = catchaysnc(async(req,res,next)=>{
+  console.log(req.query);
   const products = await db.find().populate('sellers',{_id:0,name:1})
   res.json({
       sucess:true,

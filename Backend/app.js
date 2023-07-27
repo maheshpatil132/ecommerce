@@ -8,9 +8,9 @@ const { newbuyer, GetBuyers, GetSingleBuyer, LoginBuyer, LogoutBuyer, UpdateBuye
 const { CreateProduct, GetallProduct, GetSingleProduct, UpdateProduct, DeleteProduct, UpdateManyProduct, Get8Product } = require('./routes/ProductRoutes');
 const error = require('./middleware/error');
 const cookieParser = require("cookie-parser");
-const { CreateSeller, SignUpSeller, LoginSeller, DeleteSeller, AddProdRequest, Sellerquote, Getsingleseller, Getallsellerquote, GetAllseller, SendCreateReq, UpdateSeller } = require('./routes/sellerRoutes');
-const { CreateAdmin, LoginAdmin, ApproveSeller, RejectSeller, AddProduct, GetAllSellerRequest, GetAllProdRequest, Rejectorder, Adminclickprocess, Sendrfqadmin, Adminupdateprice } = require('./routes/AdminRoutes');
-const { CreateOrder, GetAllOrder, GetSingleOrder, AdminUpdates, BuyerUpdates, SellerUpdates, GetAllQuotes, GetQuote, AdminAccepted } = require('./routes/OrderRoutes');
+const { CreateSeller, SignUpSeller, LoginSeller, DeleteSeller, AddProdRequest, Sellerquote, Getsingleseller, Getallsellerquote, GetAllseller, SendCreateReq, UpdateSeller, NewProduct } = require('./routes/sellerRoutes');
+const { CreateAdmin, LoginAdmin, ApproveSeller, RejectSeller, AddProduct, GetAllSellerRequest, GetAllProdRequest, Rejectorder, Adminclickprocess, Sendrfqadmin, Adminupdateprice, GetNewProdRequest, RejectProduct } = require('./routes/AdminRoutes');
+const { CreateOrder, GetAllOrder, GetSingleOrder, AdminUpdates, BuyerUpdates, SellerUpdates, GetAllQuotes, GetQuote, AdminAccepted, AdminRejected } = require('./routes/OrderRoutes');
 
 
 
@@ -20,7 +20,7 @@ const server = http.createServer(app)
 
 
 app.use(cors({
-  credentials: true, origin: ['http://localhost:3000', 'https://maqure.org', 'https://www.maqure.org', 'https://www.maqure.in' , 'https://maqure.in', 'http://127.0.0.1:5500'], allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
+  credentials: true, origin: ['http://localhost:3000', 'https://maqure.org', 'https://www.maqure.org', 'https://www.maqure.in' , 'https://maqure.in', 'http://127.0.0.1:5500'], allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token' , ],
 }))
 app.use(cookieParser())
 app.use(body.urlencoded({ extended: false }))
@@ -90,6 +90,7 @@ app.use(GetAllseller)
 app.use(SendCreateReq)
 app.use(UpdateSeller)
 app.use(Getallsellerquote)
+app.use(NewProduct)
 
 
 
@@ -105,6 +106,8 @@ app.use(Rejectorder)
 app.use(Adminclickprocess)
 app.use(Sendrfqadmin)
 app.use(Adminupdateprice)
+app.use(GetNewProdRequest)
+app.use(RejectProduct)
 
 // order routes
 app.use(CreateOrder)
@@ -116,6 +119,7 @@ app.use(SellerUpdates)
 app.use(GetAllQuotes)
 app.use(GetQuote)
 app.use(AdminAccepted)
+app.use(AdminRejected)
 
 app.get('/', (req, res, next) => {
   res.send('hello')
