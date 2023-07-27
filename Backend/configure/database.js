@@ -7,10 +7,11 @@ const connectDatabase = (app, PORT) => {
             useUnifiedTopology: true
         }
     ).then(() => {
-        app.listen(PORT, () => {
+        app.listen( PORT , () => {
             console.log(`server is listening....${PORT} `);
         })
     }).catch(err => {
+       
         console.log(err.message);
     })
 }
