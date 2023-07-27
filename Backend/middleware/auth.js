@@ -49,7 +49,6 @@ exports.isSeller = catchaysnc(async (req, res, next) => {
 
 
 exports.autherizesrole = (...roles)=>{
-  console.log(roles);
   return (req,res,next)=>{
     if(!roles.includes(req.user.role) || !req.user){
       next(new Errorhandler(`Role : ${req.user.role} is not allowed`))
