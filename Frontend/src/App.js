@@ -86,13 +86,6 @@ function App() {
 			{ path: '/sellerreq', element: <Navbar role={user ? user.role : ''} /> },
 			{ path: '/buyerorderpage', element: <Navbar role={user ? user.role : ''} /> },
 
-
-
-
-
-
-
-
 		]);
 
 	useEffect(() => {

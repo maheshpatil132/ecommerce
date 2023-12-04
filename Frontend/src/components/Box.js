@@ -33,8 +33,6 @@ const Box = ({ content, bids }) => {
 
 		// Seller
 		else if (content === 'Live') setVal(bids.filter(bid => bid.order_status === 'active').length)
-		// else if (content === 'Pending') setVal((bids.filter(bid => bid.order_status === 'active').length) + (bids.filter(bid => bid.order_status === 'ended').length))
-		// else if (content === 'Previous') setVal((bids.filter(bid => bid.order_status === 'accepted').length) + (bids.filter(bid => bid.order_status === 'rejected').length))
 		else if (content === 'PreparingSeller') setVal(bids.filter(bid => bid.order_status === 'preparing').length)
 		else if (content === 'DeliveredSeller') setVal(bids.filter(bid => bid.order_status === 'delivered' || bid.order_status === 'inTransit').length)
 	}

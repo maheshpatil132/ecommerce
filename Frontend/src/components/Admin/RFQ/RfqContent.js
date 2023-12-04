@@ -45,7 +45,7 @@ export default function RfqContent() {
 
   useEffect(() => {
 
-    dispatch(getallorders)
+    dispatch(getallorders())
     setBids(bid)
 
   }, [status])
@@ -91,7 +91,8 @@ export default function RfqContent() {
         <div className=' grid grid-cols-3  justify-around gap-6'>
           {
             status === 'processing' &&
-            (
+            ( 
+              bid &&
               bid.filter(bid => bid.quote_status === status).length > 0 ?
                 bid.filter(bid => bid.quote_status === status).map((elem, index) => {
                   return (

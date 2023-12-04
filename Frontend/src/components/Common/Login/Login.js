@@ -38,7 +38,6 @@ const Login = ({setOpen , setCreateOpen}) => {
                     navigate('/dashboard')
                 }).catch((error) => {
                     setOpen(true)
-                    console.log(error);
                 })
             } else {
                 dispatch(loginbuyeraction(email, password ,setOpen)).then(() => {
@@ -46,7 +45,6 @@ const Login = ({setOpen , setCreateOpen}) => {
                 }).catch((error) => {
                     setOpen(true)
 
-                    console.log(error);
                 })
 
             }

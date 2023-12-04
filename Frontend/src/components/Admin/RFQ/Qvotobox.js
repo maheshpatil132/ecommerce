@@ -15,8 +15,7 @@ export default function Qvotobox({ elem, id ,setStatus }) {
 	const [arr, setArr] = useState([])
  
 	const date = new Date(elem.createdAt)
-   
-	console.log(elem)
+
 
 	const val = date.getDate()
 	const month = date.getMonth()
